@@ -1,4 +1,4 @@
-export interface Service {
+export type Service = {
   id: number;
   title: string;
   description: string;
@@ -15,18 +15,18 @@ export interface Service {
   isFavorite?: boolean;
   avatar?: string;
   isBooked?: boolean;
-}
+};
 
-export interface Match {
+export type Match = {
   id: number;
   serviceId: number;
   matchingServiceId: number;
   userId: number;
   matchingUserId: number;
-  status?: "pending" | "accepted" | "rejected" | "completed";
-}
+  status?: 'pending' | 'accepted' | 'rejected' | 'completed';
+};
 
-export interface Message {
+export type Message = {
   id: number;
   text: string;
   userId: number;
@@ -35,9 +35,9 @@ export interface Message {
   attachments?: string[];
   isEmoji?: boolean;
   isSystemMessage?: boolean;
-}
+};
 
-export interface Conversation {
+export type Conversation = {
   id: number;
   participantUserId: number;
   participantUserName: string;
@@ -47,22 +47,22 @@ export interface Conversation {
   serviceId?: number;
   matchId?: number;
   messages: Message[];
-}
+};
 
-export interface User {
+export type User = {
   id: number;
   name: string;
   avatar?: string;
   location?: string;
   rating?: number;
-}
+};
 
-export interface Booking {
+export type Booking = {
   id: number;
   serviceId: number;
   userId: number;
   date: string;
   time: string;
-  status: "confirmed" | "canceled" | "completed";
+  status: 'confirmed' | 'canceled' | 'completed';
   createdAt: Date;
-}
+};
