@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 const items = [
   { id: 'home', icon: Home, link: '/' },
   { id: 'bell', icon: Bell, link: '/chat' },
-  { id: 'settings', icon: Settings, link: '/' },
+  { id: 'settings', icon: Settings, link: '/blog' },
   { id: 'help', icon: HelpCircle, link: '/' },
   { id: 'shield', icon: Shield, link: '/' },
 ];
