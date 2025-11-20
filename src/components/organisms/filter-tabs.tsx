@@ -26,6 +26,7 @@ export default function FilterTabs(): JSX.Element {
           {categories.map((cat, index) => (
             <Button
               key={cat}
+              variant="ghost"
               onClick={() => setActive(cat)}
               className={
                 `flex items-center gap-2 rounded-full px-4 py-2 transition-all`

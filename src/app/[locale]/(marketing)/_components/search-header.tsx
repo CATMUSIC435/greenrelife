@@ -30,11 +30,11 @@ export default function SearchHeader() {
         />
       </div>
 
-      <Button className="rounded-full bg-blue-50">
+      <Button variant="ghost" size="icon" className="rounded-full bg-blue-50">
         <Moon className="h-5 w-5 text-blue-600" />
       </Button>
 
-      <Button className="rounded-full">
+      <Button variant="ghost" size="icon" className="rounded-full">
         <LogOut className="h-5 w-5" />
       </Button>
 
