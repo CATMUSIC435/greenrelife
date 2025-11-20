@@ -16,7 +16,7 @@ const categories: string[] = [
   'Tech',
 ];
 
-export default function FilterTabs(): JSX.Element {
+export default function FilterTabs() {
   const [active, setActive] = useState<string>('All');
 
   return (
