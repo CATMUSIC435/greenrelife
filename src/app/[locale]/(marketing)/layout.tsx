@@ -14,7 +14,9 @@ export default async function Layout(props: {
 
   return (
     <>
-      {props.children}
+      <div className="mx-auto w-full max-w-md">
+        {props.children}
+      </div>
       <div className="fixed bottom-2 flex w-full justify-center">
         <IconMenu />
       </div>
