@@ -18,6 +18,16 @@ const baseConfig: NextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'greenrelife.dxmd.vn',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 // Initialize the Next-Intl plugin

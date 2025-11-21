@@ -36,7 +36,7 @@ export default async function Index() {
                 </Link>
               </div>
               <div className="group relative grow">
-                <h3 className="text-wwite group-hover:text-wwite mt-2 text-lg/6 font-semibold">
+                <h3 className="mt-2 text-lg/6 font-semibold text-white group-hover:text-black">
                   <Link href={`/blog/${post.slug}`}>
                     <span className="absolute inset-0" />
                     {post.title.rendered}
