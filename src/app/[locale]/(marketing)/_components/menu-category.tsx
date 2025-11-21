@@ -21,8 +21,6 @@ export default function MenuCategory() {
     { label: 'Cài Đặt', icon: <Settings size={24} />, action: () => console.log('Đi tới cài đặt') },
     { label: 'Thông Báo', icon: <Bell size={24} />, action: () => console.log('Hiển thị thông báo'), badge: 5 },
     { label: 'Yêu Thích', icon: <Star size={24} />, action: () => console.log('Hiển thị danh sách yêu thích') },
-    { label: 'Yêu Thích', icon: <Star size={24} />, action: () => console.log('Hiển thị danh sách yêu thích') },
-    { label: 'Yêu Thích', icon: <Star size={24} />, action: () => console.log('Hiển thị danh sách yêu thích') },
   ];
 
   return (

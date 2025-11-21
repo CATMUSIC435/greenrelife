@@ -21,5 +21,6 @@ export type IPost = {
   date: string;
   slug: string;
   title: IRendered;
+  content: IRendered;
   yoast_head_json: IYoastHeadJson;
 };
