@@ -1,5 +1,3 @@
-import { notFound } from 'next/navigation';
-
 type Post = {
   id: number;
   title: string;
@@ -9,49 +7,19 @@ type Post = {
   date: string;
 };
 
-async function getPostBySlug(slug: string): Promise<Post | null> {
+export default async function Page({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { slug } = await params;
+
   const res = await fetch(`https://greenrelife.dxmd.vn/wp-json/wp/v2/posts?slug=${slug}`, {
     next: { revalidate: 60 }, // ISR
   });
   if (!res.ok) {
     return null;
   }
-  const data = await res.json();
-  if (!data || data.length === 0) {
-    return null;
-  }
 
-  const post = data[0];
-  const featured_image = post.featured_media
-    ? await getFeaturedImage(post.featured_media)
-    : undefined;
-
-  return {
-    id: post.id,
-    title: post.title.rendered,
-    content: post.content.rendered,
-    slug: post.slug,
-    featured_image,
-    date: post.date,
-  };
-}
-
-async function getFeaturedImage(mediaId: number) {
-  const res = await fetch(`https://greenrelife.dxmd.vn/wp-json/wp/v2/media/${mediaId}`);
-  if (!res.ok) {
-    return null;
-  }
-  const data = await res.json();
-  return data.source_url;
-}
-
-export default async function Page({ params }: { params: Promise<{ locale: string; slug: string }> }) {
-  const { slug } = await params;
-
-  const post = await getPostBySlug(slug);
-
+  const post: Post = await res.json();
   if (!post) {
-    return notFound();
+    return null;
   }
 
   return (

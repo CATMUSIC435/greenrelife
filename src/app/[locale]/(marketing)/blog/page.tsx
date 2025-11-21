@@ -1,6 +1,5 @@
 import type { IPost } from '@/types/post';
 import Link from 'next/link';
-import { NextResponse } from 'next/server';
 
 export default async function Index() {
   const WORDPRESS_API = process.env.NEXT_PUBLIC_WORDPRESS_API ?? '';
@@ -13,7 +12,7 @@ export default async function Index() {
   });
 
   if (!res.ok) {
-    return NextResponse.json({ error: `WordPress API returned ${res.status}` }, { status: res.status });
+    return null;
   }
 
   const data: Array<IPost> = await res.json();
