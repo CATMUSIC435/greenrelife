@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 export default function ServiceCard() {
   return (
     <Card className="w-full gap-2 overflow-hidden rounded-2xl py-0 shadow-md transition-all duration-300 hover:shadow-lg md:gap-4">
-      {/* Image */}
+
       <div className="relative">
         <img
           src="https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxZWFyY2h8M3x8b3JnYW5pYyUyMGdhcmRlbmluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=80"
@@ -18,15 +18,13 @@ export default function ServiceCard() {
         </button>
       </div>
 
-      {/* Content */}
       <CardContent className="px-4 py-4">
-        {/* Tag + Location */}
         <div className="mb-3 flex items-center justify-between">
           <Badge className="bg-blue-100 text-blue-600 hover:bg-blue-100">
             Cleaning
           </Badge>
 
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center text-xs text-gray-500">
             <MapPin className="mr-1 h-4 w-4 text-gray-400" />
             North Hills
           </div>
@@ -46,12 +44,12 @@ export default function ServiceCard() {
             <Avatar className="h-8 w-8">
               <AvatarImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="David" />
             </Avatar>
-            <p className="text-sm font-medium">David Rodriguez</p>
+            <p className="text-xs font-medium">David Rodriguez</p>
           </div>
 
           <div className="flex items-center gap-1">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <span className="text-sm font-semibold">4.9</span>
+            <span className="text-xs font-semibold">4.9</span>
           </div>
         </div>
       </CardContent>

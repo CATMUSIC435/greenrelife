@@ -6,7 +6,7 @@ export default function Index() {
     <div className="max-w-8xl">
       <>
         <div className="p:2 flex h-screen flex-1 flex-col justify-between sm:p-6">
-          <div className="flex justify-between border-b-2 border-gray-200 py-3 sm:items-center">
+          <div className="flex justify-between border-b-2 border-gray-200 px-2 py-3 sm:items-center">
             <div className="relative flex items-center space-x-4">
               <div className="relative">
                 <span className="absolute right-0 bottom-0 text-green-500">
@@ -287,7 +287,7 @@ export default function Index() {
               </div>
             </div>
           </div>
-          <div className="mb-2 border-t-2 border-gray-200 px-4 pt-4 sm:mb-0">
+          <div className="mb-18 border-t-2 border-gray-200 px-4 pt-4 sm:mb-0">
             <div className="relative flex">
               <span className="absolute inset-y-0 flex items-center">
                 <button
