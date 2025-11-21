@@ -45,8 +45,7 @@ async function getFeaturedImage(mediaId: number) {
   return data.source_url;
 }
 
-export default async function BlogPostPage({ params }: { params: { locale: string; slug: string } }) {
-  // Next.js 15: params vẫn unwrap được trong server component
+export default async function Page({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug } = await params;
 
   const post = await getPostBySlug(slug);

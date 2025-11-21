@@ -1,3 +1,5 @@
+import ServiceCard from '@/components/organisms/service-card';
+
 export type Product = {
   id: number;
   name: string;
@@ -17,25 +19,9 @@ export default async function ProductList() {
   const products: Array<Product> = await res.json();
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-4">
-      {products?.map(product => (
-        <a
-          key={product.id}
-          href={product.permalink || '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="overflow-hidden rounded-lg border transition-shadow hover:shadow-md"
-        >
-          <img
-            src={product.images?.[0]?.src || '/placeholder.png'}
-            alt={product.name}
-            className="h-40 w-full object-cover"
-          />
-          <div className="p-2">
-            <h3 className="text-sm font-semibold">{product.name}</h3>
-            <p className="mt-1 font-bold text-red-500">{product.price ? `${product.price} đ` : 'Liên hệ'}</p>
-          </div>
-        </a>
+    <div className="mb-20 grid grid-cols-2 gap-4 md:grid-cols-4">
+      {products?.map((product, index) => (
+        <ServiceCard key={index} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price ? `${product.price} đ` : 'Liên hệ'} />
       ))}
     </div>
   );
