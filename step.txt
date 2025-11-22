@@ -1,0 +1,8 @@
+curl -X POST "https://greenrelife.dxmd.vn/wp-json/custom/v1/register" \
+  -H "Content-Type: application/json" \
+  -d '{ "username": "abc", "email": "abc@gmail.com", "password": "123456" }'
+
+  curl -X POST "https://greenrelife.dxmd.vn/wp-json/user/v1/products" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d @product.json
