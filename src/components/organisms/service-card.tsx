@@ -1,17 +1,19 @@
 import { Heart, Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 
 type ServiceCardProps = {
+  id: number;
   img: string;
   title: string;
   description: string;
   price: string;
 };
 
-export default function ServiceCard({ title, description, img, price }: ServiceCardProps) {
+export default function ServiceCard({ id, title, description, img, price }: ServiceCardProps) {
   return (
     <Card className="w-full gap-2 overflow-hidden rounded-2xl py-0 shadow-md transition-all duration-300 hover:shadow-lg md:gap-4">
 
@@ -35,9 +37,11 @@ export default function ServiceCard({ title, description, img, price }: ServiceC
 
       <CardContent className="px-2 py-2">
         <p className="mb-1 text-xs">{price}</p>
-        <h3 className="mb-1 line-clamp-2 text-sm">
-          {title}
-        </h3>
+        <Link href={`/search/${id}`}>
+          <h3 className="mb-1 line-clamp-2 text-sm">
+            {title}
+          </h3>
+        </Link>
 
         <p className="mb-4 line-clamp-2 font-sans text-sm text-gray-500">
           {description}

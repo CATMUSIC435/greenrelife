@@ -1,15 +1,15 @@
 'use client';
-import { Bell, HelpCircle, Home, Settings, Shield } from 'lucide-react';
+import { Home, Map, Newspaper, Search, Shield } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import { cn } from '@/lib/utils';
 
 const items = [
   { id: 'home', icon: Home, link: '/' },
-  { id: 'bell', icon: Bell, link: '/chat' },
-  { id: 'settings', icon: Settings, link: '/blog' },
-  { id: 'help', icon: HelpCircle, link: '/' },
-  { id: 'shield', icon: Shield, link: '/' },
+  { id: 'bell', icon: Search, link: '/search' },
+  { id: 'map', icon: Map, link: '/map' },
+  { id: 'post', icon: Newspaper, link: '/blog' },
+  { id: 'shield', icon: Shield, link: '/chat' },
 ];
 
 export default function IconMenu() {
@@ -19,6 +19,7 @@ export default function IconMenu() {
     <div className="flex w-max items-center gap-3 rounded-full border bg-white/40 px-2 shadow-sm backdrop-blur-md">
       {items.map(({ id, icon: Icon, link }) => (
         <button
+          type="button"
           key={id}
           onClick={() => {
             setActive(id);
