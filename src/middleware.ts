@@ -40,13 +40,6 @@ export default async function middleware(
   request: NextRequest,
   event: NextFetchEvent,
 ) {
-  const ua = request.headers.get('user-agent') || '';
-  const isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(ua);
-
-  if (!isMobile) {
-    // Chặn hoặc redirect về trang khác
-    return NextResponse.redirect(new URL('/not-allowed', request.url));
-  }
   // Verify the request with Arcjet
   // Use `process.env` instead of Env to reduce bundle size in middleware
   if (process.env.ARCJET_KEY) {
