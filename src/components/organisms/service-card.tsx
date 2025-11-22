@@ -23,7 +23,7 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
           height={1080}
           src={img}
           alt="Service"
-          className="h-36 w-full object-cover"
+          className="h-24 w-full object-cover"
         />
         <button type="button" className="absolute top-3 right-3 rounded-full bg-white p-2 shadow-sm transition hover:scale-110">
           <Heart className="h-4 w-4 text-red-500" />
@@ -43,7 +43,7 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
           </h3>
         </Link>
 
-        <p className="mb-4 line-clamp-2 font-sans text-sm text-gray-500">
+        <p className="mb-1 line-clamp-2 font-sans text-sm text-gray-500">
           {description}
         </p>
 

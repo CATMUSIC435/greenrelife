@@ -1,5 +1,5 @@
 'use client';
-import { Home, Map, Newspaper, Search, Shield } from 'lucide-react';
+import { Home, Map, Newspaper, Search, Settings } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -9,7 +9,7 @@ const items = [
   { id: 'bell', icon: Search, link: '/search' },
   { id: 'map', icon: Map, link: '/map' },
   { id: 'post', icon: Newspaper, link: '/blog' },
-  { id: 'shield', icon: Shield, link: '/chat' },
+  { id: 'shield', icon: Settings, link: '/user-profile' },
 ];
 
 export default function IconMenu() {

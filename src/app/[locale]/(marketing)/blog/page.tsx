@@ -21,7 +21,7 @@ export default async function Index() {
   return (
     <div className="bg-white pt-4 pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-4 pt-1 text-white lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <div className="mx-auto grid max-w-2xl grid-cols-2 gap-x-4 gap-y-4 pt-1 text-white lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {data.map((post, index) => (
             <article key={post.id} className={cn('flex max-w-xl flex-col items-start justify-between rounded-md bg-center px-4 py-4 md:rounded-2xl', !index ? 'col-span-2 pt-36' : 'pt-12')} style={{ backgroundImage: `url(${post.yoast_head_json.og_image[0]?.url})` }}>
               <div className="flex items-center gap-x-4 text-xs">
@@ -46,7 +46,6 @@ export default async function Index() {
                     {post.title.rendered}
                   </Link>
                 </h3>
-                {/* <p className="mt-4 hidden text-xs md:line-clamp-3 md:block">{post.description}</p> */}
               </div>
               {!index
                 ? (

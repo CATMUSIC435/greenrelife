@@ -93,6 +93,7 @@
     "checkly": "^6.9.1",
     "conventional-changelog-conventionalcommits": "^9.1.0",
     "cross-env": "^10.1.0",
+    "dayjs": "^1.11.19",
     "dotenv-cli": "^11.0.0",
     "drizzle-kit": "^0.31.7",
     "eslint": "^9.39.1",
