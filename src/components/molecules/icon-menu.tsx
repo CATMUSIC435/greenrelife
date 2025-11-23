@@ -1,5 +1,5 @@
 'use client';
-import { Home, Map, Newspaper, Search, Settings } from 'lucide-react';
+import { Home, Map, Newspaper, Search, Settings, ShoppingCart } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ const items = [
   { id: 'bell', icon: Search, link: '/search' },
   { id: 'map', icon: Map, link: '/map' },
   { id: 'post', icon: Newspaper, link: '/blog' },
+  { id: 'cart', icon: ShoppingCart, link: '/cart' },
   { id: 'shield', icon: Settings, link: '/user-profile' },
 ];
 

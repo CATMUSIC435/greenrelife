@@ -4,9 +4,10 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const res = await fetch('https://greenrelife.io.vn/wp-json/custom/v1/create-order', {
+    const res = await fetch('https://greenrelife.io.vn//wp-json/wc/v3/orders', {
       method: 'POST',
       headers: {
+        'Authorization': `Basic ${btoa('ck_199523ebb78a02bb0d6ee9de11ff26d952a589bb:cs_9bbd84666696485dbd1bec40f16c385d39d5af43')}`,
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0',
         'Accept': '*/*',

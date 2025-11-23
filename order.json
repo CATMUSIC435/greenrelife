@@ -1,0 +1,22 @@
+{
+  "payment_method": "bacs",
+  "payment_method_title": "Direct Bank Transfer",
+  "set_paid": true,
+  "billing": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "address_1": "123 Main St",
+    "city": "Ho Chi Minh",
+    "state": "HCM",
+    "postcode": "700000",
+    "country": "VN",
+    "email": "john@example.com",
+    "phone": "0123456789"
+  },
+  "line_items": [
+    {
+      "product_id": 123,
+      "quantity": 2
+    }
+  ]
+}
