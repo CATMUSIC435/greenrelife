@@ -5,50 +5,22 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Attributes from '@/components/molecules/attributes';
 import ImageCarousel from '@/components/molecules/image-carousel';
+import { useCart } from '@/stores/cart';
 
 type WooProduct = any;
 
 export default function ProductClient({ product }: { product: WooProduct }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const addItem = useCart(s => s.addItem);
 
-  // nếu product.variations là mảng id, bạn có thể fetch chi tiết variation khi user chọn
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
   const [loadingAdd, setLoadingAdd] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
 
   const images = product.images ?? [];
 
   const handleOptionChange = (name: string, value: string) => {
     setSelectedOptions(prev => ({ ...prev, [name]: value }));
-  };
-
-  const addToCart = async () => {
-    setLoadingAdd(true);
-    setMessage(null);
-    try {
-      const res = await fetch('/api/cart/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productId: product.id,
-          quantity,
-          options: selectedOptions,
-        }),
-      });
-
-      if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(txt || 'Add to cart failed');
-      }
-
-      setMessage('Đã thêm vào giỏ hàng ✅');
-    } catch (err: any) {
-      console.error(err);
-      setMessage(`Thêm thất bại: ${err.message || 'Lỗi'}`);
-    } finally {
-      setLoadingAdd(false);
-    }
   };
 
   return (
@@ -100,14 +72,23 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         <button
           type="button"
           className="rounded-md bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 disabled:opacity-60"
-          onClick={addToCart}
+          onClick={() => {
+            setLoadingAdd(true);
+            addItem({
+              id: product.id,
+              name: product.name,
+              price: Number(product.price),
+              image: product.images?.[0]?.src,
+              quantity: 1,
+            });
+
+            setLoadingAdd(false);
+          }}
           disabled={loadingAdd}
         >
           {loadingAdd ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
         </button>
       </div>
-
-      {message && <p className="mt-3 text-sm">{message}</p>}
     </div>
   );
 }
