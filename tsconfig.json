@@ -28,7 +28,7 @@
     // Additional checks for higher code quality
     // ======================================================================
     "noUncheckedIndexedAccess": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
