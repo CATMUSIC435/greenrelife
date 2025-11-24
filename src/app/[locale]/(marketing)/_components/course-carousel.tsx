@@ -47,7 +47,9 @@ export default function CoursesCarrousel() {
                         </div>
 
                         <div className="absolute bottom-0 left-0 w-full">
-                          <CoursePopup courseId={course.id} />
+                          <div className="flex w-full justify-center">
+                            <CoursePopup courseId={course.id} />
+                          </div>
                           <div className="w-full bg-white/20 p-2 backdrop-blur-md">
                             {course.course_categories && (
                               <div className="mb-3 flex flex-wrap gap-2">

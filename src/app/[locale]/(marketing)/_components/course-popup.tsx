@@ -47,7 +47,7 @@ export default function CoursePopup({ courseId = 119 }: CoursePopupProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button onClick={fetchCourse} className="h-12 w-12 bg-gray-200/20 p-2 backdrop-blur-md">
-          <CirclePlay size={90} className="h-12 w-12 object-cover" />
+          <CirclePlay className="block h-12 w-12 object-cover text-xl" />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl">
