@@ -1,7 +1,7 @@
 import type { MarkerItem } from '../_components/mapbox-map';
 import MapboxMap from '../_components/mapbox-map';
 
-export async function fetchMarkers() {
+async function fetchMarkers() {
   const res = await fetch(
     `https://greenrelife.dxmd.vn/wp-json/wc/v3/products`,
     {
