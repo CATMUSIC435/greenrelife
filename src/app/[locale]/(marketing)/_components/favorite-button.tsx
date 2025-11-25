@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 
 export function FavoriteButton({ productId }: { productId: number }) {
@@ -11,6 +12,7 @@ export function FavoriteButton({ productId }: { productId: number }) {
           setLiked(true);
         }
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleFavorite = async () => {
