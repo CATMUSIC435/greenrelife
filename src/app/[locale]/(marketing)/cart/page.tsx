@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCart } from '@/stores/cart';
 
 export default function CartPage() {
@@ -69,9 +70,9 @@ export default function CartPage() {
           {total()}
           ₫
         </p>
-        <button className="mt-4 rounded-xl bg-green-600 px-5 py-3 text-white">
+        <Link href="/checkout" className="mt-4 rounded-xl bg-green-600 px-5 py-3 text-white">
           Checkout
-        </button>
+        </Link>
       </div>
     </div>
   );

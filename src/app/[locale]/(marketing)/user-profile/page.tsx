@@ -3,6 +3,7 @@
 import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function UserInfo() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -74,6 +75,19 @@ export default function UserInfo() {
             </button>
           </SignOutButton>
         </div>
+      </div>
+
+      <div className="flex flex-col">
+        <Link href="/favorite" className="bg-gray-100/20 px-2 py-2 backdrop-blur-md">
+          Quản lý sản phẩm yêu thích
+        </Link>
+        <Link href="/product" className="bg-gray-100/20 px-2 py-2 backdrop-blur-md">
+          Quản lý sản phẩm
+        </Link>
+        <Link href="/order" className="bg-gray-100/20 px-2 py-2 backdrop-blur-md">
+          Quản lý đơn đặt hành
+        </Link>
+
       </div>
     </div>
   );

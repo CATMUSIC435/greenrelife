@@ -1,6 +1,7 @@
-import { Heart, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FavoriteButton } from '@/app/[locale]/(marketing)/_components/favorite-button';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -25,9 +26,9 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
           alt="Service"
           className="h-24 w-full object-cover"
         />
-        <button type="button" className="absolute top-3 right-3 rounded-full bg-white p-2 shadow-sm transition hover:scale-110">
-          <Heart className="h-4 w-4 text-red-500" />
-        </button>
+        <div className="absolute top-3 right-3 rounded-full bg-white p-2 shadow-sm transition hover:scale-110">
+          <FavoriteButton productId={id} />
+        </div>
         <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
           <Badge className=" bg-blue-100 text-blue-600 hover:bg-blue-100">
             Cleaning

@@ -25,14 +25,12 @@ export default function ProductClient({ product }: { product: WooProduct }) {
 
   return (
     <div>
-      {/* Carousel with thumbnails */}
       <div className="mb-4">
         <ImageCarousel
           images={images}
           selectedIndex={selectedImageIndex}
           onChange={setSelectedImageIndex}
         />
-        {/* thumbnails */}
         <div className="mt-2 flex gap-2 overflow-x-auto">
           {images.map((img: any, idx: number) => (
             <button
@@ -47,14 +45,12 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         </div>
       </div>
 
-      {/* Attributes / options */}
       <Attributes
         attributes={product.attributes ?? []}
         selectedOptions={selectedOptions}
         onChange={handleOptionChange}
       />
 
-      {/* Quantity + add to cart */}
       <div className="mt-4 flex items-center gap-3">
         <div className="flex items-center rounded-md border">
           <button type="button" className="px-3 py-1" onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
