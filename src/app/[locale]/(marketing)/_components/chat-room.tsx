@@ -22,7 +22,6 @@ type ClientMessage = {
 export default function ChatRoom({ id }: { id: string }) {
   const { user } = useUser();
   const [messages, setMessages] = useState<any>([]);
-  const [text, setText] = useState('');
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   const conversationId = id;
