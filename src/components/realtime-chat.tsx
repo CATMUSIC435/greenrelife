@@ -71,15 +71,27 @@ export const RealtimeChat = ({
   }, [allMessages, scrollToBottom]);
 
   const handleSendMessage = useCallback(
+
     (e: React.FormEvent) => {
       e.preventDefault();
       if (!newMessage.trim() || !isConnected) {
         return;
       }
 
+      const send = async (msg: string) => {
+        await fetch('/api/chat/message', {
+          method: 'POST',
+          body: JSON.stringify({
+            conversation_id: roomName,
+            content: msg,
+          }),
+        });
+      };
+      send(newMessage);
       sendMessage(newMessage);
       setNewMessage('');
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [newMessage, isConnected, sendMessage],
   );
 

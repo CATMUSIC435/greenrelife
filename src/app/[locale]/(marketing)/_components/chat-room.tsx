@@ -47,22 +47,6 @@ export default function ChatRoom({ id }: { id: string }) {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  async function send(msg: string) {
-    if (!text.trim()) {
-      return;
-    }
-
-    await fetch('/api/chat/message', {
-      method: 'POST',
-      body: JSON.stringify({
-        conversation_id: conversationId,
-        content: text,
-      }),
-    });
-
-    setText('');
-  }
-
   return (
     <div className="mx-auto flex max-w-xl flex-col border" style={{ height: '90vh' }}>
       {/* Messages */}
