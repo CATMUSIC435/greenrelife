@@ -1,7 +1,7 @@
 'use client';
 
-import { RealtimeChat } from '@/components/realtime-chat';
+import SellerChatList from '../_components/seller-chat-list';
 
 export default function Index() {
-  return <RealtimeChat roomName="my-chat-room" username="john_doe" />;
+  return <SellerChatList />;
 }

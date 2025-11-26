@@ -84,6 +84,28 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         >
           {loadingAdd ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
         </button>
+        <button
+          className="rounded-lg bg-blue-600 px-4 py-2 text-white"
+          type="button"
+          onClick={async () => {
+            const res = await fetch('/api/chat/create', {
+              method: 'POST',
+              body: JSON.stringify({
+                seller_id: 'user_360a9O6PBsVSEyET9gcRrkWnWDG',
+                product_id: product.id,
+              }),
+            });
+
+            const data = await res.json();
+
+            if (data.id) {
+              // Redirect tới phòng chat
+              window.location.href = `/chat/${data.id}`;
+            }
+          }}
+        >
+          Nhắn tin người bán
+        </button>
       </div>
     </div>
   );

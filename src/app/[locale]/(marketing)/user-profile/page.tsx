@@ -87,7 +87,9 @@ export default function UserInfo() {
         <Link href="/order" className="bg-gray-100/20 px-2 py-2 backdrop-blur-md">
           Quản lý đơn đặt hành
         </Link>
-
+        <Link href="/chat" className="bg-gray-100/20 px-2 py-2 backdrop-blur-md">
+          Quản lý tin nhắn khách hàng
+        </Link>
       </div>
     </div>
   );
