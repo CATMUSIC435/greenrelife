@@ -16,15 +16,15 @@ const listImg = [
 
 export function CarouselHeader() {
   return (
-    <div className="h-60">
+    <div className="h-40">
       <Carousel className="relative h-full w-full">
         <CarouselContent>
-          {listImg.map((item, index) => (
-            <CarouselItem key={index}>
+          {listImg.map(item => (
+            <CarouselItem key={item}>
               <div className="p-0">
                 <Card className="p-0">
                   <CardContent className="flex h-full items-center justify-center p-0">
-                    <Image src={item} alt="" width={1920} height={1080} className="h-60 w-full object-cover" />
+                    <Image src={item} alt="" width={1920} height={1080} className="h-40 w-full object-cover" />
                   </CardContent>
                 </Card>
               </div>

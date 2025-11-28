@@ -16,7 +16,7 @@ export default function UserInfo() {
     return (
       <div className="flex justify-center">
         <SignInButton mode="modal">
-          <button type="button" className="rounded-lg bg-blue-500 px-6 py-2 text-white transition hover:bg-blue-600">
+          <button type="button" className="w-full rounded bg-blue-500 px-6 py-2 text-white shadow-2xl transition hover:bg-blue-600">
             Đăng nhập
           </button>
         </SignInButton>
@@ -31,7 +31,7 @@ export default function UserInfo() {
     dateStr ? dayjs(dateStr).format('DD/MM/YYYY HH:mm') : 'N/A';
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-xl bg-white p-6 shadow-lg">
+    <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-xl px-4 py-6">
       {/* Avatar */}
       {user.imageUrl && (
         <div className="relative h-24 w-24 flex-shrink-0">
@@ -44,7 +44,7 @@ export default function UserInfo() {
         </div>
       )}
 
-      <div className="max-w-sm rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="max-w-sm rounded-xl bg-white/20 p-4 shadow-sm backdrop-blur-2xl">
         {/* Name + Username */}
         <p className="text-lg font-bold text-gray-900">
           {user.firstName}
@@ -61,15 +61,15 @@ export default function UserInfo() {
         </p>
 
         {/* Email */}
-        <p className="mt-1 truncate text-sm text-gray-500">{user.emailAddresses[0]?.emailAddress}</p>
+        <p className="mt-1 truncate text-sm">{user.emailAddresses[0]?.emailAddress}</p>
 
         {/* ID and Role */}
-        <div className="mt-2 flex flex-wrap gap-2 text-sm text-gray-600">
-          <span className="rounded-md bg-gray-100 px-2 py-1">
+        <div className="mt-2 flex flex-wrap gap-2 text-sm">
+          <span className="rounded-md bg-gray-100/20 px-2 py-1 backdrop-blur-md">
             ID:
             {user.id}
           </span>
-          <span className="rounded-md bg-indigo-100 px-2 py-1 text-indigo-800">
+          <span className="rounded-md bg-indigo-100/20 px-2 py-1 text-indigo-800">
             Role:
             {' '}
             {(user.publicMetadata?.role as string) || 'User'}
@@ -77,7 +77,7 @@ export default function UserInfo() {
         </div>
 
         {/* Created Date */}
-        <p className="mt-2 text-xs text-gray-400">
+        <p className="mt-2 text-xs">
           Created:
           {' '}
           {formatDate(`${user.createdAt}`)}
@@ -85,16 +85,16 @@ export default function UserInfo() {
       </div>
 
       <div className="flex w-full flex-col gap-1">
-        <Link href="/favorite" className="rounded-md bg-gray-400/20 px-2 py-4 backdrop-blur-lg">
+        <Link href="/favorite" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý sản phẩm yêu thích
         </Link>
-        <Link href="/product" className="rounded-md bg-gray-400/20 px-2 py-4 backdrop-blur-lg">
+        <Link href="/product" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý sản phẩm
         </Link>
-        <Link href="/order" className="rounded-md bg-gray-400/20 px-2 py-4 backdrop-blur-lg">
+        <Link href="/order" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý đơn đặt hành
         </Link>
-        <Link href="/chat" className="rounded-md bg-gray-400/20 px-2 py-4 backdrop-blur-lg">
+        <Link href="/chat" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý tin nhắn khách hàng
         </Link>
       </div>

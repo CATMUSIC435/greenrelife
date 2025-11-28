@@ -2,6 +2,8 @@
 
 import type { IPost } from '@/types/post';
 import useEmblaCarousel from 'embla-carousel-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function NewsCarousel() {
@@ -35,17 +37,22 @@ export default function NewsCarousel() {
               key={post.id}
               className="shrink-0 basis-1/2 px-1" // hiển thị 2 tin tức mỗi slide
             >
-              <div className="flex h-full flex-col rounded-xl bg-white p-4 shadow">
-                <img
-                  src={post.yoast_head_json.og_image[0]?.url}
-                  alt={post.title.rendered}
-                  className="h-40 w-full rounded-lg object-cover"
-                />
-                <h3
-                  className="mt-3 line-clamp-3 text-xs font-semibold"
-                  dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                />
-              </div>
+              <Link href={`/blog/${post.slug}`}>
+                <div className="flex h-full flex-col rounded-xl px-2 py-1 shadow-2xl">
+                  <Image
+                    src={post.yoast_head_json.og_image[0]?.url ?? ''}
+                    alt={post.title.rendered}
+                    height={400}
+                    width={400}
+                    className="h-40 w-full rounded-lg object-cover"
+                  />
+                  <h3
+                    className="mt-3 line-clamp-3 text-xs font-semibold"
+                    // eslint-disable-next-line react-dom/no-dangerously-set-innerhtml
+                    dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                  />
+                </div>
+              </Link>
             </div>
           );
         })}

@@ -16,7 +16,7 @@ type ServiceCardProps = {
 
 export default function ServiceCard({ id, title, description, img, price }: ServiceCardProps) {
   return (
-    <Card className="w-full gap-2 overflow-hidden rounded-2xl py-0 shadow-md transition-all duration-300 hover:shadow-lg md:gap-4">
+    <Card className="w-full gap-2 overflow-hidden rounded-2xl bg-transparent py-0 shadow-2xl  transition-all duration-300 hover:shadow-lg md:gap-4">
 
       <div className="relative">
         <Image
@@ -26,7 +26,7 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
           alt="Service"
           className="h-24 w-full object-cover"
         />
-        <div className="absolute top-3 right-3 rounded-full bg-white p-2 shadow-sm transition hover:scale-110">
+        <div className="absolute top-3 right-3 rounded-full bg-white/80 p-1 shadow transition hover:scale-110">
           <FavoriteButton productId={id} />
         </div>
         <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
@@ -36,24 +36,24 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
         </div>
       </div>
 
-      <CardContent className="px-2 py-2">
-        <p className="mb-1 text-xs">{price}</p>
+      <CardContent className="px-2 py-1">
+        <p className="text-xs">{price}</p>
         <Link href={`/search/${id}`}>
-          <h3 className="mb-1 line-clamp-2 text-sm">
+          <h3 className="mb-1 line-clamp-2 font-sans text-sm">
             {title}
           </h3>
         </Link>
 
-        <p className="mb-1 line-clamp-2 font-sans text-sm text-gray-500">
+        <p className="line-clamp-2 hidden font-mono text-sm text-gray-500">
           {description}
         </p>
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8">
+            <Avatar className="h-6 w-6">
               <AvatarImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="David" />
             </Avatar>
-            <p className="line-clamp-2 text-xs font-medium">David Rodriguez</p>
+            <p className="line-clamp-1 text-xs">David Rodriguez</p>
           </div>
 
           <div className="flex items-center gap-1">

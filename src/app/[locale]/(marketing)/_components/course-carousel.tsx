@@ -19,7 +19,7 @@ export default function CoursesCarrousel() {
   }, []);
 
   return (
-    <div className="h-60">
+    <div className="h-52">
       <Carousel className="relative h-full w-full">
         <CarouselContent>
           {courses.map((course) => {
@@ -30,7 +30,7 @@ export default function CoursesCarrousel() {
               <CarouselItem key={course.id}>
                 <div className="p-0">
                   <Card className="p-0">
-                    <CardContent className="flex h-full items-center justify-center p-0">
+                    <CardContent className="relative flex h-full items-center justify-center p-0">
                       <div
                         key={course.id}
                         className="group relative w-full flex-shrink-0 overflow-hidden rounded-md border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
@@ -45,11 +45,14 @@ export default function CoursesCarrousel() {
                           />
                           <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
                         </div>
-
-                        <div className="absolute bottom-0 left-0 w-full">
+                        <div className="absolute top-[50%] w-full -translate-y-[50%]">
                           <div className="flex w-full justify-center">
                             <CoursePopup courseId={course.id} />
                           </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 w-full">
+
                           <div className="w-full bg-white/20 p-2 backdrop-blur-md">
                             {course.course_categories && (
                               <div className="mb-3 flex flex-wrap gap-2">

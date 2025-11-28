@@ -29,21 +29,21 @@ export default async function Index() {
   const dataexp: Array<IPost> = await resexp.json();
 
   return (
-    <div className="bg-white pt-4 pb-24">
-      <div className="px-4">
+    <div className="pt-4 pb-24">
+      <div className="px-4 pb-4">
         <CoursesCarrousel />
       </div>
       <div className="mx-auto max-w-7xl px-4">
         <div className="mx-auto grid max-w-2xl grid-cols-2 gap-x-4 gap-y-4 pt-1 text-white lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {data.map((post, index) => (
-            <article key={post.id} className={cn('flex max-w-xl flex-col items-start justify-between rounded-md bg-center px-4 py-4 md:rounded-2xl', !index ? 'col-span-2 pt-30' : 'pt-12')} style={{ backgroundImage: `url(${post.yoast_head_json.og_image[0]?.url})` }}>
+            <article key={post.id} className={cn('flex max-w-xl flex-col items-start justify-between rounded-md bg-center px-4 py-4 md:rounded-2xl shadow-2xl', !index ? 'col-span-2 pt-30' : 'pt-12')} style={{ backgroundImage: `url(${post.yoast_head_json.og_image[0]?.url})` }}>
               <div className="flex items-center gap-x-4 text-xs">
                 <time dateTime={post.date} className="text-white">
                   {post.date}
                 </time>
               </div>
               <div className="group relative grow">
-                <h3 className={cn('mt-2 font-semibold text-white group-hover:text-black', !index ? ' text-lg/6 line-clamp-3' : 'text-sm line-clamp-2')}>
+                <h3 className={cn('mt-1 font-semibold text-white group-hover:text-black', !index ? ' text-lg/6 line-clamp-3' : 'text-sm line-clamp-2')}>
                   <Link href={`/blog/${post.slug}`}>
                     <span className="absolute inset-0" />
                     {post.title.rendered}
@@ -56,9 +56,9 @@ export default async function Index() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 py-6">
-        <div className="mx-auto grid max-w-2xl gap-x-4 gap-y-4 ">
+        <div className="mx-auto grid max-w-2xl gap-x-4 gap-y-2 ">
           {dataexp.map((post, index) => (
-            <article key={post.id} className={cn('grid grid-cols-4 max-w-xl gap-2 rounded-md bg-center md:rounded-2xl')}>
+            <article key={post.id} className={cn('grid grid-cols-4 max-w-xl gap-2 rounded-md bg-center md:rounded-2xl shadow-2xl py-3 px-2')}>
               <div className="w-full">
                 <Image
                   height={1080}

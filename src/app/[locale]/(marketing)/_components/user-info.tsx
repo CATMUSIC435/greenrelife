@@ -1,22 +1,27 @@
 'use client';
 
-import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
+import { SignInButton, useUser } from '@clerk/nextjs';
+import { Bell } from 'lucide-react';
 import Image from 'next/image';
 
 const UserInfo = () => {
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {
-    return <p>Đang tải...</p>;
+    return (
+      <div className="flex w-full justify-between rounded px-4 py-1">
+        <p className="text-xs">Đang tải...</p>
+      </div>
+    );
   }
 
   if (!isSignedIn) {
     return (
-      <div className="flex w-full justify-between rounded p-4">
-        <div className="h-10 w-10 rounded-full bg-gray-400">
+      <div className="flex w-full justify-between rounded px-4 py-1">
+        <div className="h-8 w-8 rounded-full bg-white/80">
         </div>
         <SignInButton>
-          <button type="button" className="mt-2 rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-blue-500">
+          <button type="button" className="rounded bg-blue-400 px-2 py-2 text-xs font-bold text-white shadow-2xs hover:bg-blue-500">
             Đăng nhập
           </button>
         </SignInButton>
@@ -29,7 +34,7 @@ const UserInfo = () => {
   }
 
   return (
-    <div className="flex w-full justify-between rounded p-4">
+    <div className="flex w-full justify-between rounded rounded-b-md px-4 py-1 shadow backdrop-blur-md">
       <div className="flex items-center gap-2">
         {user.imageUrl && (
           <Image
@@ -37,20 +42,18 @@ const UserInfo = () => {
             alt={user.username ?? ''}
             height={100}
             width={100}
-            className="mt-2 h-10 w-10 rounded-full"
+            className="mt-2 h-8 w-8 rounded-full"
           />
         )}
-        <p className="font-bold">
+        <p className="text-xs font-medium text-white">
           Xin chào,
           {user.firstName || user.username}
           !
         </p>
       </div>
-      <SignOutButton>
-        <button type="button" className="mt-2 rounded bg-red-500 px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-red-400">
-          Đăng xuất
-        </button>
-      </SignOutButton>
+      <button type="button">
+        <Bell size={20} color="#fff" className="font-bold" />
+      </button>
     </div>
   );
 };

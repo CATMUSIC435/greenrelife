@@ -1,4 +1,5 @@
 import type { IPost } from '@/types/post';
+import Image from 'next/image';
 
 export default async function Page({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug } = await params;
@@ -19,10 +20,12 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 
   return (
     <div className="mx-auto max-w-3xl px-4 pt-2 pb-20">
-      <h1 className="mb-4 text-center text-2xl font-bold">{post.title.rendered}</h1>
-      {post.yoast_head_json.og_image[0]?.url && <img src={post.yoast_head_json.og_image[0]?.url} alt={post.title.rendered} className="mb-6" />}
-      <p className="mb-6 text-gray-500">{new Date(post.date).toLocaleDateString()}</p>
-      <div dangerouslySetInnerHTML={{ __html: `${post.content.rendered}` }} />
+      <h1 className="mb-2 text-center text-2xl font-bold text-white text-shadow-2xs">{post.title.rendered}</h1>
+      {post.yoast_head_json.og_image[0]?.url && <Image height={600} width={900} src={post.yoast_head_json.og_image[0]?.url} alt={post.title.rendered} className="mb-4 rounded-md" />}
+      <p className="mb-2 text-xs">{new Date(post.date).toLocaleDateString()}</p>
+      <div className="rounded-md border-[1px] border-white px-2 py-4 shadow-2xs">
+        <div dangerouslySetInnerHTML={{ __html: `${post.content.rendered}` }} />
+      </div>
     </div>
   );
 }

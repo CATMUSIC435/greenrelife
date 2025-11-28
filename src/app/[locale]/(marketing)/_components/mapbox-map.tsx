@@ -115,8 +115,9 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
       if (m.title || m.description) {
         const popupHtml = `<div class="p-2">
-            ${m.title ? `<div style="font-weight:600;margin-bottom:6px">${escapeHtml(m.title)}</div>` : ''}
-            ${m.description ? `<div style="font-size:13px;color:#444">${escapeHtml(m.description)}</div>` : ''}
+            ${m.iconUrl ? `<img src="${m.iconUrl}" alt="Girl in a jacket" width="800" height="600" class="w-full">` : ''}
+            ${m.title ? `<div class="line-clamp-2 text-lg font-bold mb-1">${escapeHtml(m.title)}</div>` : ''}
+            ${m.description ? `<div style="color:#444" class="line-clamp-3 text-xs">${escapeHtml(m.description)}</div>` : ''}
           </div>`;
 
         const popup = new mapboxgl.Popup({ offset: 12 }).setHTML(popupHtml);

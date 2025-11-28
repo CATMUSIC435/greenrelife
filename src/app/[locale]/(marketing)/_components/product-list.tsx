@@ -10,14 +10,11 @@ export type Product = {
   permalink?: string;
 };
 
-export default async function ProductList() {
-  const res = await fetch('https://greenrelife.dxmd.vn/wp-json/wc/v3/products', {
-    headers: {
-      Authorization: `Basic ${btoa('ck_199523ebb78a02bb0d6ee9de11ff26d952a589bb:cs_9bbd84666696485dbd1bec40f16c385d39d5af43')}`,
-    },
-  });
-  const products: Array<Product> = await res.json();
+type ProductListProps = {
+  products: Array<Product>;
+};
 
+export default function ProductList({ products }: ProductListProps) {
   return (
     <div className="mb-20 grid grid-cols-2 gap-4 md:grid-cols-4">
       {products?.map((product, index) => (

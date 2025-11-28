@@ -9,7 +9,7 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-3xl p-6">
-      <h1 className="mb-4 text-2xl font-bold">Giỏ hàng</h1>
+      <h1 className="mb-4 w-full rounded-md px-2 py-2 text-2xl font-bold text-white shadow-2xl text-shadow-2xs">Giỏ hàng</h1>
 
       <div className="space-y-4">
         {items.map(item => (
@@ -26,8 +26,8 @@ export default function CartPage() {
             />
 
             <div className="flex-1">
-              <p className="font-semibold">{item.name}</p>
-              <p className="text-gray-600">
+              <p className="line-clamp-3 font-medium">{item.name}</p>
+              <p className="text-sm">
                 {item.price}
                 ₫
               </p>
@@ -54,7 +54,7 @@ export default function CartPage() {
                 <button
                   type="button"
                   onClick={() => removeItem(item.id)}
-                  className="rounded-md bg-red-500 px-3 py-1 text-white"
+                  className="rounded-md bg-red-400/80 px-3 py-1 text-white shadow-2xs backdrop-blur-md"
                 >
                   Remove
                 </button>
@@ -64,13 +64,13 @@ export default function CartPage() {
         ))}
       </div>
 
-      <div className="mt-8 text-right">
-        <p className="text-xl font-bold">
+      <div className="py-4 text-right">
+        <p className="py-2 text-lg font-bold">
           Tổng:
           {total()}
           ₫
         </p>
-        <Link href="/checkout" className="mt-4 rounded-xl bg-green-600 px-5 py-3 text-white">
+        <Link href="/checkout" className="rounded-sm bg-blue-600 px-4 py-2 text-white shadow-2xs backdrop-blur-md">
           Checkout
         </Link>
       </div>

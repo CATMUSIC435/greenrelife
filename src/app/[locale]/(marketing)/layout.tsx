@@ -26,13 +26,13 @@ export default async function Layout(props: {
   // });
 
   return (
-    <>
+    <div className="bg-layer-gradient min-h-screen">
       <div className="mx-auto w-full max-w-md">
         {props.children}
       </div>
       <div className="fixed bottom-2 flex w-full justify-center">
         <IconMenu />
       </div>
-    </>
+    </div>
   );
 }
