@@ -1,8 +1,14 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function CreateProductPage() {
+  const { user } = useUser();
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [desc, setDesc] = useState('');
@@ -13,44 +19,34 @@ export default function CreateProductPage() {
   const WP_API = 'https://greenrelife.dxmd.vn/wp-json';
 
   // Upload ảnh -> trả về ID ảnh trong WP
-  const uploadImage = async (file: File, token: string) => {
+  const uploadImage = async (file: File) => {
     const form = new FormData();
     form.append('file', file, file.name);
 
-    const res = await fetch(`${WP_API}/wp/v2/media`, {
+    const res = await fetch('https://greenrelife.dxmd.vn/wp-json/wp/v2/media', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjQ0OTYyOTksIm5iZiI6MTc2NDQ5NjI5OSwiZXhwIjoxNzY1MTAxMDk5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.j0kYBI0pCVCh4fqK7btdvlOrvJfAVndXLlME0kFV2B4`,
         'Content-Disposition': `attachment; filename="${file.name}"`,
       },
       body: form,
     });
 
-    if (!res.ok) {
-      throw new Error('Upload ảnh thất bại');
-    }
-
     const data = await res.json();
-    return data.id; // ID media
+    return data;
   };
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
 
-      const token = localStorage.getItem('wp_token'); // HOẶC Clerk JWT
-
-      if (!token) {
-        return;
-      }
-
       // 1. Upload tất cả ảnh
       const imageIds = [];
       for (const img of images) {
-        const id = await uploadImage(img, token);
-        imageIds.push({ id });
+        const media = await uploadImage(img);
+        imageIds.push({ id: media.id }); // WooCommerce chỉ cần { id: number }
       }
-
+      const featuredMediaId = imageIds.length ? imageIds[0] : undefined;
       // 2. Gửi API tạo sản phẩm
       const payload = {
         name,
@@ -58,18 +54,23 @@ export default function CreateProductPage() {
         description: desc,
         short_description: shortDesc,
         images: imageIds,
+        featured_media: featuredMediaId,
+        status: 'publish',
+        creator_name: user?.emailAddresses[0]?.emailAddress,
       };
 
-      await fetch(`${WP_API}/user/v1/products`, {
+      const res = await fetch(`${WP_API}/user/v1/products`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization':
+              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjQ0OTYyOTksIm5iZiI6MTc2NDQ5NjI5OSwiZXhwIjoxNzY1MTAxMDk5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.j0kYBI0pCVCh4fqK7btdvlOrvJfAVndXLlME0kFV2B4`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
 
-      // const data = await res.json();
+      await res.json();
+      window.location.href = `/product`;
     } catch (err: any) {
       console.error(err);
     } finally {
@@ -78,50 +79,88 @@ export default function CreateProductPage() {
   };
 
   return (
-    <div className="mx-auto max-w-xl space-y-4 p-6">
-      <h1 className="text-2xl font-bold">Đăng sản phẩm WooCommerce</h1>
+    <div className="mx-auto max-w-xl space-y-6 rounded-lg px-4 pt-2 pb-20 shadow-md">
+      <h1 className="text-2xl font-bold text-gray-800">Đăng sản phẩm WooCommerce</h1>
 
-      <input
-        className="w-full border p-2"
-        placeholder="Tên sản phẩm"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
+      {/* Tên sản phẩm */}
+      <div className="space-y-1">
+        <Label htmlFor="name">Tên sản phẩm</Label>
+        <Input
+          id="name"
+          placeholder="Nhập tên sản phẩm"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+      </div>
 
-      <input
-        className="w-full border p-2"
-        placeholder="Giá"
-        value={price}
-        onChange={e => setPrice(e.target.value)}
-      />
+      {/* Giá sản phẩm */}
+      <div className="space-y-1">
+        <Label htmlFor="price">Giá</Label>
+        <Input
+          id="price"
+          type="number"
+          placeholder="Nhập giá sản phẩm"
+          value={price}
+          onChange={e => setPrice(e.target.value)}
+        />
+      </div>
 
-      <textarea
-        className="w-full border p-2"
-        placeholder="Mô tả"
-        value={desc}
-        onChange={e => setDesc(e.target.value)}
-      />
+      {/* Mô tả ngắn */}
+      <div className="space-y-1">
+        <Label htmlFor="shortDesc">Mô tả ngắn</Label>
+        <Textarea
+          id="shortDesc"
+          placeholder="Nhập mô tả ngắn"
+          value={shortDesc}
+          onChange={e => setShortDesc(e.target.value)}
+          className="resize-none"
+        />
+      </div>
 
-      <textarea
-        className="w-full border p-2"
-        placeholder="Mô tả ngắn"
-        value={shortDesc}
-        onChange={e => setShortDesc(e.target.value)}
-      />
+      {/* Mô tả dài */}
+      <div className="space-y-1">
+        <Label htmlFor="desc">Mô tả chi tiết</Label>
+        <Textarea
+          id="desc"
+          placeholder="Nhập mô tả chi tiết"
+          value={desc}
+          onChange={e => setDesc(e.target.value)}
+          className="resize-none"
+        />
+      </div>
 
-      <input
-        type="file"
-        multiple
-        onChange={e => setImages(Array.from(e.target.files || []))}
-      />
+      {/* Upload ảnh */}
+      <div className="space-y-1">
+        <Label htmlFor="images">Ảnh sản phẩm</Label>
+        <Input
+          id="images"
+          type="file"
+          multiple
+          onChange={e => setImages(Array.from(e.target.files || []))}
+          className="cursor-pointer"
+        />
+        {images.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {images.map((img, idx) => (
+              <span
+                key={idx}
+                className="rounded bg-green-100 px-2 py-1 text-sm text-green-800"
+              >
+                {img.name}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
 
-      <button
+      {/* Button submit */}
+      <Button
         onClick={handleSubmit}
         disabled={loading}
-        className="rounded bg-blue-600 px-4 py-2 text-white"
+        className="w-full"
       >
         {loading ? 'Đang đăng...' : 'Đăng sản phẩm'}
-      </button>
+      </Button>
     </div>
   );
 }

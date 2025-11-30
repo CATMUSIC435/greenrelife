@@ -83,6 +83,7 @@ export const RealtimeChat = ({
           method: 'POST',
           body: JSON.stringify({
             conversation_id: roomName,
+            user_id: username,
             content: msg,
           }),
         });

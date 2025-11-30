@@ -1,14 +1,8 @@
-import { auth } from '@clerk/nextjs/server';
 import { createClient } from '@supabase/supabase-js';
 
 export async function POST(req: Request) {
-  const { userId } = await auth();
-  if (!userId) {
-    return Response.json({ error: 'Not authenticated' }, { status: 401 });
-  }
-
   const body = await req.json();
-  const { product_id } = body;
+  const { product_id, user_id } = body;
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,7 +12,7 @@ export async function POST(req: Request) {
   const { error } = await supabase
     .from('favorites')
     .delete()
-    .eq('user_id', userId)
+    .eq('user_id', user_id)
     .eq('product_id', product_id);
 
   if (error) {

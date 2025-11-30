@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 
 type WooProduct = {
@@ -11,6 +12,7 @@ type WooProduct = {
 };
 
 export default function FavoriteProducts() {
+  const { user } = useUser();
   const [favorites, setFavorites] = useState<number[]>([]);
   const [products, setProducts] = useState<WooProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +20,7 @@ export default function FavoriteProducts() {
   // 1. Gọi API để lấy danh sách product_id yêu thích
   useEffect(() => {
     const loadFavorites = async () => {
-      const res = await fetch('/api/favorites');
+      const res = await fetch('/api/favorites' + `?user_id=${user?.id}`);
       const data = await res.json();
 
       const productIds = data.map((f: any) => Number(f.product_id));
@@ -31,6 +33,7 @@ export default function FavoriteProducts() {
   // 2. Gọi WooCommerce API để lấy thông tin sản phẩm theo ID
   useEffect(() => {
     if (favorites.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
       return;
     }

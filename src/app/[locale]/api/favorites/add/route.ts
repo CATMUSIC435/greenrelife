@@ -1,14 +1,8 @@
-import { auth } from '@clerk/nextjs/server';
 import { createClient } from '@supabase/supabase-js';
 
 export async function POST(req: Request) {
-  const { userId } = await auth();
-  if (!userId) {
-    return Response.json({ error: 'Not authenticated' }, { status: 401 });
-  }
-
   const body = await req.json();
-  const { product_id } = body;
+  const { product_id, user_id } = body;
 
   if (!product_id) {
     return Response.json({ error: 'product_id is required' }, { status: 400 });
@@ -21,7 +15,7 @@ export async function POST(req: Request) {
 
   const { error } = await supabase
     .from('favorites')
-    .insert({ user_id: userId, product_id });
+    .insert({ user_id, product_id });
 
   if (error) {
     return Response.json({ error: error.message }, { status: 400 });

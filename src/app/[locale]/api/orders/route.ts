@@ -1,21 +1,12 @@
-import { auth, currentUser } from '@clerk/nextjs/server';
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 const wooUrl = 'https://greenrelife.dxmd.vn/wp-json/wc/v3/orders?meta_key=_billing_email&meta_value=phuongdongiot@gmail.com';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const email = searchParams.get('user_email') ?? '';
   try {
-    const { userId } = await auth();
-    if (!userId) {
-      return new Response('Unauthorized', { status: 401 });
-    }
-
-    const user = await currentUser();
-    const email = user?.emailAddresses[0]?.emailAddress;
-    if (!email) {
-      return new Response('Missing email', { status: 400 });
-    }
-
     const response = await fetch(wooUrl, {
       method: 'GET',
       headers: {

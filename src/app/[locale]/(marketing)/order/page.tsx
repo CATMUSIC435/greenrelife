@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 
 type Order = {
@@ -11,11 +12,13 @@ type Order = {
 };
 
 export default function OrdersPage() {
+  const { user } = useUser();
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/orders')
+    fetch('/api/orders' + `?user_email=${user?.emailAddresses}`)
       .then(res => res.json())
       .then((data) => {
         setOrders(data);

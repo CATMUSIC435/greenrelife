@@ -8,6 +8,7 @@ export type Product = {
   sale_price: string;
   images: { src: string }[];
   permalink?: string;
+  creator: string;
 };
 
 type ProductListProps = {

@@ -1,20 +1,14 @@
-import { auth } from '@clerk/nextjs/server';
 import { createClient } from '@/lib/server';
 
 export async function POST(req: Request) {
-  const { userId } = await auth();
   const supabase = await createClient();
-  const { conversation_id, content } = await req.json();
-
-  if (!userId) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const { conversation_id, content, user_id } = await req.json();
 
   const { data: msg } = await supabase
     .from('messages')
     .insert({
       conversation_id,
-      sender_id: userId,
+      sender_id: user_id,
       content,
     })
     .select()

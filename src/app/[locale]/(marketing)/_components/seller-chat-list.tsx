@@ -1,11 +1,13 @@
 'use client';
+import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 
 export default function SellerChatList() {
+  const { user } = useUser();
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch('/api/chat/seller')
+    fetch('/api/chat/seller' + `?user=${user?.id}`)
       .then(res => res.json())
       .then(setList);
   }, []);
