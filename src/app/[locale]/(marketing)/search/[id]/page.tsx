@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import ProductClient from '../../_components/product-client';
+import ProductReviews from '../../_components/product-reviews';
 import ReviewPopup from '../../_components/review-popup';
 
 export type WooProduct = any;
@@ -28,7 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
 
   const product = await res.json() as WooProduct;
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto pt-4 pb-20">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left: gallery */}
         <div className="lg:col-span-1">
@@ -82,8 +83,11 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
 
       <ReviewPopup productId={product.id} />
       {/* Full description below */}
-      <div className="h-full max-h-screen overflow-x-scroll">
+      <div className="h-screen overflow-y-scroll rounded-md py-2">
         <div className="prose mt-10 max-w-none" dangerouslySetInnerHTML={{ __html: product.description || '' }} />
+      </div>
+      <div className="py-2">
+        <ProductReviews productId={product.id} />
       </div>
     </div>
   );
