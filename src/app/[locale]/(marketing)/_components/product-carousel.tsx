@@ -15,7 +15,7 @@ type ProductCarouselProps = {
   id?: number;
 };
 
-export default function ProductCarousel({ id = 4 }: ProductCarouselProps) {
+export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [emblaRef] = useEmblaCarousel({ loop: true });
 

@@ -18,7 +18,7 @@ export default async function Index() {
         <div className="py-2">
           <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white shadow-2xl">Sửa chữa</h2>
           <div className="pt-2">
-            <ProductCarousel />
+            <ProductCarousel id={20} />
           </div>
         </div>
 
