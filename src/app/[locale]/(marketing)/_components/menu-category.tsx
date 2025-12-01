@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 type MenuItem = {
   label: string;
   icon: React.ReactNode;
+  badge?: number;
   link: string;
 };
 
@@ -35,12 +36,8 @@ export default function MenuCategory() {
             >
               <div className="relative">
                 {item.icon}
-                {item.badge && (
-                  <span className="absolute -top-1 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                    {item.badge}
-                  </span>
-                )}
               </div>
+              <span className="mt-1 text-xs">{item.label}</span>
             </button>
           </li>
         ))}
