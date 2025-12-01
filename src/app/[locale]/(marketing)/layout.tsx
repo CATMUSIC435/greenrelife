@@ -3,14 +3,45 @@ import IconMenu from '@/components/molecules/icon-menu';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 export const metadata = {
-  title: 'My Awesome Next.js App',
-  description: 'This is a description of my awesome Next.js application.',
-  keywords: ['nextjs', 'seo', 'web development'],
+  title: 'GreenRelife - Trao đổi, Buôn bán & Sửa chữa Bất động sản',
+  description: 'GreenRelife là nền tảng toàn diện cho trao đổi, buôn bán, sửa chữa bất động sản. Tìm kiếm, đăng tin, và kết nối với dịch vụ sửa chữa nhanh chóng.',
+  keywords: [
+    'GreenRelife',
+    'bất động sản',
+    'trao đổi nhà đất',
+    'mua bán nhà đất',
+    'sửa chữa nhà',
+    'dịch vụ bất động sản',
+    'app bất động sản',
+  ],
+
+  // Hình đại diện cho web
+  icons: {
+    icon: '/logo-greenrelife.png', // favicon tiêu chuẩn
+    shortcut: '/logo-greenrelife.png', // shortcut icon
+    apple: '/logo-greenrelife.png', // apple touch icon
+  },
+
   openGraph: {
-    title: 'My Awesome Next.js App',
-    description: 'This is a description of my awesome Next.js application.',
-    url: 'https://example.com',
+    title: 'GreenRelife - Trao đổi, Buôn bán & Sửa chữa Bất động sản',
+    description: 'GreenRelife là nền tảng toàn diện cho trao đổi, buôn bán, sửa chữa bất động sản. Tìm kiếm, đăng tin, và kết nối với dịch vụ sửa chữa nhanh chóng.',
+    url: 'https://greenrelife.io.vn',
     type: 'website',
+    images: [
+      {
+        url: '/logo-greenrelife.png', // hình đại diện Open Graph
+        width: 800,
+        height: 600,
+        alt: 'GreenRelife Logo',
+      },
+    ],
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GreenRelife - Trao đổi, Buôn bán & Sửa chữa Bất động sản',
+    description: 'GreenRelife là nền tảng toàn diện cho trao đổi, buôn bán, sửa chữa bất động sản.',
+    images: ['/logo-greenrelife.png'],
   },
 };
 
