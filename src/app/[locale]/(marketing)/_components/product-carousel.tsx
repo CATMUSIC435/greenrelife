@@ -47,7 +47,7 @@ export default function ProductCarousel({ id = 4 }: ProductCarouselProps) {
             key={product.id}
             className="shrink-0 basis-1/2 px-3"
           >
-            <ServiceCard id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price ? `${product.price} đ` : 'Liên hệ'} />
+            <ServiceCard id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
           </div>
         ))}
       </div>

@@ -28,8 +28,7 @@ export default function CartPage() {
             <div className="flex-1">
               <p className="line-clamp-3 font-medium">{item.name}</p>
               <p className="text-sm">
-                {item.price}
-                ₫
+                {item.price ? `${Number(item.price).toLocaleString()} đ` : 'Liên hệ'}
               </p>
 
               <div className="mt-2 flex items-center gap-2">

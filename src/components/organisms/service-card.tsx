@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FavoriteButton } from '@/app/[locale]/(marketing)/_components/favorite-button';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 
 type ServiceCardProps = {
@@ -29,15 +28,17 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
         <div className="absolute top-3 right-3 rounded-full bg-white/80 p-1 shadow transition hover:scale-110">
           <FavoriteButton productId={id} />
         </div>
-        <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
+        {/* <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
           <Badge className=" bg-blue-100 text-blue-600 hover:bg-blue-100">
-            Cleaning
+
           </Badge>
-        </div>
+        </div> */}
       </div>
 
       <CardContent className="px-2 py-1">
-        <p className="text-xs">{price}</p>
+        <p className="text-xs">
+          {price ? `${Number(price).toLocaleString()} đ` : 'Liên hệ'}
+        </p>
         <Link href={`/search/${id}`}>
           <h3 className="mb-1 line-clamp-2 font-sans text-sm">
             {title}

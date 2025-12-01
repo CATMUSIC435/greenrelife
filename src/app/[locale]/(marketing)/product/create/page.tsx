@@ -2,10 +2,12 @@
 
 import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { formatDatePretty } from '@/utils/format-date-pretty';
 
 export default function CreateProductPage() {
   const { user } = useUser();
@@ -16,6 +18,7 @@ export default function CreateProductPage() {
   const [shortDesc, setShortDesc] = useState('');
   const [images, setImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState('10.8000,106.6667');
 
   const WP_API = 'https://greenrelife.dxmd.vn/wp-json';
 
@@ -59,22 +62,29 @@ export default function CreateProductPage() {
         status: 'publish',
         creator_name: user?.emailAddresses[0]?.emailAddress,
         categories: [{ id: isFix ? 32 : 20 }],
+        meta_data: [
+          {
+            key: '_product_location',
+            value: location,
+          },
+        ],
       };
 
-      console.log(payload);
+      const res = await fetch(`${WP_API}/user/v1/products`, {
+        method: 'POST',
+        headers: {
+          'Authorization':
+              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjQ0OTYyOTksIm5iZiI6MTc2NDQ5NjI5OSwiZXhwIjoxNzY1MTAxMDk5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.j0kYBI0pCVCh4fqK7btdvlOrvJfAVndXLlME0kFV2B4`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
 
-      // const res = await fetch(`${WP_API}/user/v1/products`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Authorization':
-      //         `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjQ0OTYyOTksIm5iZiI6MTc2NDQ5NjI5OSwiZXhwIjoxNzY1MTAxMDk5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.j0kYBI0pCVCh4fqK7btdvlOrvJfAVndXLlME0kFV2B4`,
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(payload),
-      // });
-
-      // await res.json();
-      // window.location.href = `/product`;
+      await res.json();
+      toast('Tạo sản phẩm thành công', {
+        description: `${formatDatePretty(new Date())}`,
+      });
+      window.location.href = `/product`;
     } catch (err: any) {
       console.error(err);
     } finally {
@@ -123,6 +133,17 @@ export default function CreateProductPage() {
           value={shortDesc}
           onChange={e => setShortDesc(e.target.value)}
           className="resize-none"
+        />
+      </div>
+
+      {/* Giá sản phẩm */}
+      <div className="space-y-1">
+        <Label htmlFor="product-location" className="text-white">Vị trí sản phẩm (lat,lng)</Label>
+        <Input
+          id="product-location"
+          placeholder="Nhập tọa độ ví dụ: 10.8000,106.6667"
+          value={location}
+          onChange={e => setLocation(e.target.value)}
         />
       </div>
 

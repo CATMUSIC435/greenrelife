@@ -2,7 +2,9 @@
 import type { LngLatLike } from 'mapbox-gl';
 import mapboxgl from 'mapbox-gl';
 // MapboxMap.tsx
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { useDebounce } from '@/hooks/use-debounce';
 
 export type MarkerItem = {
   id?: string | number;
@@ -29,15 +31,18 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   accessToken,
   center = [106.6667, 10.8000], // HCM sample
   zoom = 12,
-  markers = [],
   style = 'mapbox://styles/mapbox/streets-v11',
   height = 'h-80',
   className = '',
+  markers = [],
   defaultIconUrl = DEFAULT_ICON,
 }) => {
   const mapContainer = useRef<HTMLDivElement | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
+  const [markerInits, setMarkerInits] = useState<MarkerItem[]>(markers);
+  const debouncedQuery = useDebounce(searchQuery, 300);
 
   useEffect(() => {
     if (!mapContainer.current) {
@@ -141,10 +146,83 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markers]);
+  }, [markerInits]);
+
+  useEffect(() => {
+    const fetchMarkers = async (query: string) => {
+      const res = await fetch(
+        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?search=${encodeURIComponent(query)}`,
+        {
+          headers: {
+            Authorization:
+          `Basic ${btoa('ck_199523ebb78a02bb0d6ee9de11ff26d952a589bb:cs_9bbd84666696485dbd1bec40f16c385d39d5af43')}`,
+          },
+          cache: 'no-store',
+        },
+      );
+
+      const products = await res.json();
+      const newMakers: MarkerItem[] = products
+        .map((p: any) => {
+          const locationUrl = p.meta_data?.find((m: any) => m.key === '_product_location')?.value;
+          if (!locationUrl) {
+            return null;
+          }
+
+          const match = locationUrl.match(/([-\d.]+),([-\d.]+)/);
+          if (!match) {
+            return null;
+          }
+
+          return {
+            id: p.id,
+            lng: Number(match[2]),
+            lat: Number(match[1]),
+            title: p.name,
+            description: p.short_description?.replace(/<[^>]+>/g, '') ?? '',
+            iconUrl: p.images?.[0]?.src ?? undefined,
+          };
+        })
+        .filter(Boolean);
+
+      setMarkerInits(newMakers);
+    };
+    fetchMarkers(debouncedQuery);
+    markersRef.current.forEach(m => m.remove());
+    markersRef.current = [];
+  }, [debouncedQuery]);
 
   return (
-    <div className={`${className}`}>
+    <div className={`${className} relative`}>
+      <div className="absolute top-0 left-0 z-1 w-full pt-2">
+        <div className="flex items-center gap-4">
+          <div className="flex w-full max-w-md items-center rounded-md border border-gray-300 bg-white px-2 shadow-sm">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2 h-5 w-5 text-gray-500"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <Input
+              placeholder="Search services..."
+              className="border-0 p-0 shadow-none focus-visible:ring-0"
+
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+              }}
+
+            />
+          </div>
+        </div>
+      </div>
       <div
         ref={mapContainer}
         className={`w-full ${height} overflow-hidden rounded-lg border border-gray-100 shadow-sm`}
