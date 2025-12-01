@@ -31,7 +31,7 @@ export default function UserInfo() {
     dateStr ? dayjs(dateStr).format('DD/MM/YYYY HH:mm') : 'N/A';
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-xl px-4 py-6">
+    <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-xl px-4 pt-4 pb-20">
       {/* Avatar */}
       {user.imageUrl && (
         <div className="relative h-24 w-24 flex-shrink-0">
@@ -96,6 +96,9 @@ export default function UserInfo() {
         </Link>
         <Link href="/chat" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý tin nhắn khách hàng
+        </Link>
+        <Link href="/contact" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
+          Liên hệ
         </Link>
       </div>
     </div>

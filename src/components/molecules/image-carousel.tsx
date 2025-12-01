@@ -16,7 +16,7 @@ export default function ImageCarousel({ images = [], selectedIndex = 0, onChange
 
   return (
     <div>
-      <div className="relative h-96 w-full overflow-hidden rounded-lg">
+      <div className="relative h-80 w-full overflow-hidden rounded-lg">
         <Image
           src={img.src}
           alt={img.alt || ''}

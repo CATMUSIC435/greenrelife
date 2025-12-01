@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner';
 import IconMenu from '@/components/molecules/icon-menu';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -33,6 +34,7 @@ export default async function Layout(props: {
       <div className="fixed bottom-2 flex w-full justify-center">
         <IconMenu />
       </div>
+      <Toaster richColors />
     </div>
   );
 }

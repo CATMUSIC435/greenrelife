@@ -4,14 +4,18 @@
 
 import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import Attributes from '@/components/molecules/attributes';
 import ImageCarousel from '@/components/molecules/image-carousel';
 import { useCart } from '@/stores/cart';
+import { hasCategory } from '@/utils/has-category';
 
 type WooProduct = any;
 
 export default function ProductClient({ product }: { product: WooProduct }) {
+  const hasCat = hasCategory(product.categories, 20);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCart(s => s.addItem);
   const { user } = useUser();
@@ -53,51 +57,64 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         selectedOptions={selectedOptions}
         onChange={handleOptionChange}
       />
-
-      <div className="mt-4 flex items-center gap-3">
-        <div className="flex items-center rounded-md border">
-          <button type="button" className="px-3 py-1" onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
-          <input
-            className="w-16 text-center"
-            value={quantity}
-            onChange={(e) => {
-              const v = Number(e.target.value) || 1;
-              setQuantity(Math.max(1, Math.floor(v)));
-            }}
-          />
-          <button type="button" className="px-3 py-1" onClick={() => setQuantity(q => q + 1)}>+</button>
-        </div>
-
-        <button
+      {hasCat ? (
+        <Link
+          href={`/checkout/${product.id}`}
           type="button"
-          className="rounded-md bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 disabled:opacity-60"
-          onClick={() => {
-            setLoadingAdd(true);
-            addItem({
-              id: product.id,
-              name: product.name,
-              price: Number(product.price),
-              image: product.images?.[0]?.src,
-              quantity: 1,
-            });
-
-            setLoadingAdd(false);
-          }}
-          disabled={loadingAdd}
+          className="mb-1 block w-full rounded-md bg-blue-600 px-5 py-2 text-center text-white hover:bg-blue-700 disabled:opacity-60"
         >
-          {loadingAdd ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
-        </button>
-      </div>
+          Đặt lịch sửa chữa
+        </Link>
+      )
+        : (
+            <div className="mt-4 flex items-center gap-3">
+              <div className="flex items-center rounded-md border">
+                <button type="button" className="px-3 py-1" onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
+                <input
+                  className="w-16 text-center"
+                  value={quantity}
+                  onChange={(e) => {
+                    const v = Number(e.target.value) || 1;
+                    setQuantity(Math.max(1, Math.floor(v)));
+                  }}
+                />
+                <button type="button" className="px-3 py-1" onClick={() => setQuantity(q => q + 1)}>+</button>
+              </div>
+
+              <button
+                type="button"
+                className="rounded-md bg-blue-600 px-5 py-2 text-white hover:bg-blue-700 disabled:opacity-60"
+                onClick={() => {
+                  setLoadingAdd(true);
+                  addItem({
+                    id: product.id,
+                    name: product.name,
+                    price: Number(product.price),
+                    image: product.images?.[0]?.src,
+                    quantity: 1,
+                  });
+
+                  setLoadingAdd(false);
+
+                  toast.success('Thêm sản phẩm vào giỏ hàng thành công');
+                }}
+                disabled={loadingAdd}
+              >
+                {loadingAdd ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
+              </button>
+            </div>
+          )}
       { user ? (
         <button
           className="mt-2 w-full rounded-lg bg-lime-600 px-4 py-2 text-white"
           type="button"
           onClick={async () => {
+            toast.success('Đang tạo phòng với người bán!');
             const res = await fetch('/api/chat/create', {
               method: 'POST',
               body: JSON.stringify({
                 user_id: user?.emailAddresses[0]?.emailAddress,
-                seller_id: product?.creator ? product.creator : 'phuongdongiot@gmail.com',
+                seller_id: product?.creator ? product.creator : 'vietanhpham17082003@gmail.com',
                 product_id: product.id,
               }),
             });
@@ -105,7 +122,8 @@ export default function ProductClient({ product }: { product: WooProduct }) {
             const data = await res.json();
 
             if (data.id) {
-            // Redirect tới phòng chat
+              toast.success('Chuyển nhắn tin với người bán!');
+              // Redirect tới phòng chat
               window.location.href = `/chat/${data.id}`;
             }
           }}
