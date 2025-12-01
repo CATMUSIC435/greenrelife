@@ -29,7 +29,7 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
 
   const product = await res.json() as WooProduct;
   return (
-    <div className="container mx-auto pt-4 pb-20">
+    <div className="container mx-auto px-4 pt-4 pb-20">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left: gallery */}
         <div className="lg:col-span-1">
