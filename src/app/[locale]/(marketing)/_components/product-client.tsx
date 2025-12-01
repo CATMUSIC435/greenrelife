@@ -1,6 +1,8 @@
+/* eslint-disable style/multiline-ternary */
 // components/ProductClient.tsx
 'use client';
 
+import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
 import { useState } from 'react';
 import Attributes from '@/components/molecules/attributes';
@@ -12,6 +14,7 @@ type WooProduct = any;
 export default function ProductClient({ product }: { product: WooProduct }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCart(s => s.addItem);
+  const { user } = useUser();
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [quantity, setQuantity] = useState(1);
@@ -84,14 +87,17 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         >
           {loadingAdd ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
         </button>
+      </div>
+      { user ? (
         <button
-          className="rounded-lg bg-blue-600 px-4 py-2 text-white"
+          className="mt-2 w-full rounded-lg bg-lime-600 px-4 py-2 text-white"
           type="button"
           onClick={async () => {
             const res = await fetch('/api/chat/create', {
               method: 'POST',
               body: JSON.stringify({
-                seller_id: 'user_360a9O6PBsVSEyET9gcRrkWnWDG',
+                user_id: user?.emailAddresses[0]?.emailAddress,
+                seller_id: product?.creator ? product.creator : 'phuongdongiot@gmail.com',
                 product_id: product.id,
               }),
             });
@@ -99,14 +105,14 @@ export default function ProductClient({ product }: { product: WooProduct }) {
             const data = await res.json();
 
             if (data.id) {
-              // Redirect tới phòng chat
+            // Redirect tới phòng chat
               window.location.href = `/chat/${data.id}`;
             }
           }}
         >
           Nhắn tin người bán
         </button>
-      </div>
+      ) : null}
     </div>
   );
 }

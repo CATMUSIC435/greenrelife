@@ -1,5 +1,6 @@
 'use client';
 import { useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function SellerChatList() {
@@ -7,15 +8,15 @@ export default function SellerChatList() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch('/api/chat/seller' + `?user=${user?.id}`)
+    fetch('/api/chat/seller' + `?user=${user?.emailAddresses[0]?.emailAddress}`)
       .then(res => res.json())
       .then(setList);
-  }, []);
+  }, [user]);
 
   return (
     <div className="space-y-3">
       {list.map((c: any) => (
-        <a
+        <Link
           key={c.id}
           href={`/chat/${c.id}`}
           className="block rounded-lg border p-4 shadow-sm hover:bg-gray-100"
@@ -25,7 +26,7 @@ export default function SellerChatList() {
             {c.product_id}
           </p>
           <p className="text-sm text-gray-600">{c.last_message}</p>
-        </a>
+        </Link>
       ))}
     </div>
   );

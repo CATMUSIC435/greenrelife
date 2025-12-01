@@ -49,7 +49,7 @@ export default function ChatRoom({ id }: { id: string }) {
   return (
     <div className="mx-auto flex max-w-xl flex-col border" style={{ height: '90vh' }}>
       {/* Messages */}
-      <RealtimeChat roomName={id} username={user?.id ?? ''} messages={messages} />
+      <RealtimeChat roomName={id} username={user?.emailAddresses[0]?.emailAddress ?? ''} messages={messages} />
     </div>
   );
 }
