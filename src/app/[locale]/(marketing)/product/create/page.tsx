@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 export default function CreateProductPage() {
   const { user } = useUser();
   const [name, setName] = useState('');
+  const [isFix, setIsFix] = useState(false);
   const [price, setPrice] = useState('');
   const [desc, setDesc] = useState('');
   const [shortDesc, setShortDesc] = useState('');
@@ -46,7 +47,7 @@ export default function CreateProductPage() {
         const media = await uploadImage(img);
         imageIds.push({ id: media.id }); // WooCommerce chỉ cần { id: number }
       }
-      const featuredMediaId = imageIds.length ? imageIds[0] : undefined;
+      const featuredMediaId = imageIds.length ? imageIds[0]?.id : undefined;
       // 2. Gửi API tạo sản phẩm
       const payload = {
         name,
@@ -57,20 +58,23 @@ export default function CreateProductPage() {
         featured_media: featuredMediaId,
         status: 'publish',
         creator_name: user?.emailAddresses[0]?.emailAddress,
+        categories: [{ id: isFix ? 32 : 20 }],
       };
 
-      const res = await fetch(`${WP_API}/user/v1/products`, {
-        method: 'POST',
-        headers: {
-          'Authorization':
-              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjQ0OTYyOTksIm5iZiI6MTc2NDQ5NjI5OSwiZXhwIjoxNzY1MTAxMDk5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.j0kYBI0pCVCh4fqK7btdvlOrvJfAVndXLlME0kFV2B4`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+      console.log(payload);
 
-      await res.json();
-      window.location.href = `/product`;
+      // const res = await fetch(`${WP_API}/user/v1/products`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Authorization':
+      //         `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjQ0OTYyOTksIm5iZiI6MTc2NDQ5NjI5OSwiZXhwIjoxNzY1MTAxMDk5LCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.j0kYBI0pCVCh4fqK7btdvlOrvJfAVndXLlME0kFV2B4`,
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(payload),
+      // });
+
+      // await res.json();
+      // window.location.href = `/product`;
     } catch (err: any) {
       console.error(err);
     } finally {
@@ -79,12 +83,12 @@ export default function CreateProductPage() {
   };
 
   return (
-    <div className="mx-auto max-w-xl space-y-6 rounded-lg px-4 pt-2 pb-20 shadow-md">
-      <h1 className="text-2xl font-bold text-gray-800">Đăng sản phẩm WooCommerce</h1>
+    <div className="mx-auto space-y-6 rounded-lg px-4 pt-2 pb-20 shadow-md">
+      <h1 className="w-full text-center text-2xl font-bold text-white">Đăng sản phẩm</h1>
 
       {/* Tên sản phẩm */}
       <div className="space-y-1">
-        <Label htmlFor="name">Tên sản phẩm</Label>
+        <Label htmlFor="name" className="text-white">Tên sản phẩm</Label>
         <Input
           id="name"
           placeholder="Nhập tên sản phẩm"
@@ -93,9 +97,14 @@ export default function CreateProductPage() {
         />
       </div>
 
+      <div className="space-y-1">
+        <Label htmlFor="name" className="text-white">Loại</Label>
+        <Button className="w-full bg-blue-600" onClick={() => setIsFix(prev => !prev)}>{isFix ? 'Sữa chữa' : 'Bán'}</Button>
+      </div>
+
       {/* Giá sản phẩm */}
       <div className="space-y-1">
-        <Label htmlFor="price">Giá</Label>
+        <Label htmlFor="price" className="text-white">Giá</Label>
         <Input
           id="price"
           type="number"
@@ -107,7 +116,7 @@ export default function CreateProductPage() {
 
       {/* Mô tả ngắn */}
       <div className="space-y-1">
-        <Label htmlFor="shortDesc">Mô tả ngắn</Label>
+        <Label htmlFor="shortDesc" className="text-white">Mô tả ngắn</Label>
         <Textarea
           id="shortDesc"
           placeholder="Nhập mô tả ngắn"
@@ -119,7 +128,7 @@ export default function CreateProductPage() {
 
       {/* Mô tả dài */}
       <div className="space-y-1">
-        <Label htmlFor="desc">Mô tả chi tiết</Label>
+        <Label htmlFor="desc" className="text-white">Mô tả chi tiết</Label>
         <Textarea
           id="desc"
           placeholder="Nhập mô tả chi tiết"
@@ -131,7 +140,7 @@ export default function CreateProductPage() {
 
       {/* Upload ảnh */}
       <div className="space-y-1">
-        <Label htmlFor="images">Ảnh sản phẩm</Label>
+        <Label htmlFor="images" className="text-white">Ảnh sản phẩm</Label>
         <Input
           id="images"
           type="file"
