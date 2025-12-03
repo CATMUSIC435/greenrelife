@@ -22,7 +22,7 @@ export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await fetch(
-        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?category=20&per_page=${id}`,
+        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?category=${id}&per_page=10`,
         {
           headers: {
             Authorization:
