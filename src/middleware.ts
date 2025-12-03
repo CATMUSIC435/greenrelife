@@ -10,7 +10,6 @@ const handleI18nRouting = createMiddleware(routing);
 
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
-  '/api/chat/:path*',
   // '/:locale(.*)',
 ]);
 
