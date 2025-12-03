@@ -11,9 +11,9 @@ export const metadata = {
 
   // Hình đại diện cho web
   icons: {
-    icon: '/logo-greenrelife.png', // favicon tiêu chuẩn
-    shortcut: '/logo-greenrelife.png', // shortcut icon
-    apple: '/logo-greenrelife.png', // apple touch icon
+    icon: '/logo.png', // favicon tiêu chuẩn
+    shortcut: '/logo.png', // shortcut icon
+    apple: '/logo.png', // apple touch icon
   },
 
   openGraph: {

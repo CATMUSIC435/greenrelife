@@ -4,6 +4,9 @@ export function CardHeader() {
   return (
     <div className="h-56 w-full">
       <div className="relative h-full w-full rounded-md px-2 shadow-2xl backdrop-blur-sm">
+        <div className="mx-auto h-auto w-1/2">
+          <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
+        </div>
         <div className="h-full w-full">
           <Image src="/assets/images/people-banner.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
         </div>
