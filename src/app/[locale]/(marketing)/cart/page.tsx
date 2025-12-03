@@ -70,7 +70,7 @@ export default function CartPage() {
           ₫
         </p>
         <Link href="/checkout" className="rounded-sm bg-blue-600 px-4 py-2 text-white shadow-2xs backdrop-blur-md">
-          Checkout
+          Đặt hàng
         </Link>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FavoriteButton } from '@/app/[locale]/(marketing)/_components/favorite-button';
-import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 
 type ServiceCardProps = {
@@ -51,10 +50,6 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="David" />
-            </Avatar>
-            <p className="line-clamp-1 text-xs">David Rodriguez</p>
           </div>
 
           <div className="flex items-center gap-1">
