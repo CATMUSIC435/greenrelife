@@ -24,7 +24,6 @@ export default function FavoriteProducts() {
       const dataFavorites = await resFavorites.json();
 
       const favorites = dataFavorites.map((f: any) => Number(f.product_id));
-      console.log(favorites);
 
       const wooUrl = `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?include=${favorites.join(',')}`;
       if (favorites.length !== 0) {
