@@ -10,8 +10,11 @@ export default async function Index() {
   return (
     <div className="w-full pb-20">
       <UserInfo />
+      <h2 className="py-4 text-center text-4xl font-bold text-white uppercase text-shadow-2xs">Green Relife</h2>
       <div className="px-4 py-4">
-        <CardHeader />
+        <div className="pb-4">
+          <CardHeader />
+        </div>
         <div className="py-4">
           <MenuCategory />
         </div>

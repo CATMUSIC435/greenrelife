@@ -24,22 +24,25 @@ export default function FavoriteProducts() {
       const dataFavorites = await resFavorites.json();
 
       const favorites = dataFavorites.map((f: any) => Number(f.product_id));
+      console.log(favorites);
 
       const wooUrl = `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?include=${favorites.join(',')}`;
+      if (favorites.length !== 0) {
+        const res = await fetch(wooUrl, {
+          headers: {
+            Authorization: `Basic ${btoa('ck_199523ebb78a02bb0d6ee9de11ff26d952a589bb:cs_9bbd84666696485dbd1bec40f16c385d39d5af43')}`,
+          },
+        });
 
-      const res = await fetch(wooUrl, {
-        headers: {
-          Authorization: `Basic ${btoa('ck_199523ebb78a02bb0d6ee9de11ff26d952a589bb:cs_9bbd84666696485dbd1bec40f16c385d39d5af43')}`,
-        },
-      });
-
-      const data = await res.json();
-      setProducts(data);
+        const data = await res.json();
+        setProducts(data);
+      }
       setLoading(false);
     };
-
-    loadWooProducts();
-  }, []);
+    if (user) {
+      loadWooProducts();
+    }
+  }, [user]);
 
   const remoteFavourite = async (productId: number) => {
     await fetch('/api/favorites/remove', {
@@ -62,7 +65,7 @@ export default function FavoriteProducts() {
   }
 
   return (
-    <div className="grid gap-6 p-6 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 p-6">
       {products.map(p => (
         <div
           key={p.id}

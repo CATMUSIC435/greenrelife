@@ -13,8 +13,8 @@ export function CardHeader() {
             <p>Mua bán</p>
           </div>
         </div>
-        <div className="absolute bottom-8 left-[40%]">
-          <p className="text-2xl font-bold text-white">Có đây !</p>
+        <div className="absolute bottom-6 left-[30%]">
+          <p className="text-4xl font-bold text-lime-300 text-shadow-2xs">Có đây !</p>
         </div>
       </div>
     </div>

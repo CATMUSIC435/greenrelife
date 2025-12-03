@@ -44,7 +44,7 @@ export default function UserInfo() {
         </div>
       )}
 
-      <div className="max-w-sm rounded-xl bg-white/20 p-4 shadow-sm backdrop-blur-2xl">
+      <div className="w-full max-w-sm rounded-xl bg-white/20 p-4 shadow-sm backdrop-blur-2xl">
         {/* Name + Username */}
         <p className="text-lg font-bold text-gray-900">
           {user.firstName}
@@ -65,10 +65,6 @@ export default function UserInfo() {
 
         {/* ID and Role */}
         <div className="mt-2 flex flex-wrap gap-2 text-sm">
-          <span className="rounded-md bg-gray-100/20 px-2 py-1 backdrop-blur-md">
-            ID:
-            {user.id}
-          </span>
           <span className="rounded-md bg-indigo-100/20 px-2 py-1 text-indigo-800">
             Role:
             {' '}
@@ -106,6 +102,9 @@ export default function UserInfo() {
         <Link href="/contact" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Liên hệ
         </Link>
+      </div>
+      <div className="fixed bottom-14 left-0 w-full">
+        <h2 className="py-4 text-center text-4xl font-bold text-white uppercase text-shadow-2xs">Green Relife</h2>
       </div>
     </div>
   );
