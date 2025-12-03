@@ -1,15 +1,17 @@
-import { cn } from '@/lib/utils'
+/* eslint-disable style/semi */
 import type { ChatMessage } from '@/hooks/use-realtime-chat'
+import { cn } from '@/lib/utils'
 
-interface ChatMessageItemProps {
-  message: ChatMessage
-  isOwnMessage: boolean
-  showHeader: boolean
+type ChatMessageItemProps = {
+  message: ChatMessage;
+  isOwnMessage: boolean;
+  showHeader: boolean;
+  who: string;
 }
 
-export const ChatMessageItem = ({ message, isOwnMessage, showHeader }: ChatMessageItemProps) => {
+export const ChatMessageItem = ({ message, isOwnMessage, showHeader, who }: ChatMessageItemProps) => {
   return (
-    <div className={`flex mt-2 ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
+    <div className={`mt-2 flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}>
       <div
         className={cn('max-w-[75%] w-fit flex flex-col gap-1', {
           'items-end': isOwnMessage,
@@ -21,8 +23,8 @@ export const ChatMessageItem = ({ message, isOwnMessage, showHeader }: ChatMessa
               'justify-end flex-row-reverse': isOwnMessage,
             })}
           >
-            <span className={'font-medium'}>{message.user.name}</span>
-            <span className="text-foreground/50 text-xs">
+            <span className="font-medium">{who}</span>
+            <span className="text-xs text-foreground/50">
               {new Date(message.createdAt).toLocaleTimeString('en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -34,7 +36,7 @@ export const ChatMessageItem = ({ message, isOwnMessage, showHeader }: ChatMessa
         <div
           className={cn(
             'py-2 px-3 rounded-xl text-sm w-fit',
-            isOwnMessage ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground'
+            isOwnMessage ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground',
           )}
         >
           {message.content}

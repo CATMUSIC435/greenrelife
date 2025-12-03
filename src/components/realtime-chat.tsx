@@ -120,6 +120,7 @@ export const RealtimeChat = ({
                 <ChatMessageItem
                   message={message}
                   isOwnMessage={message.user.name === username}
+                  who={message.user.name === username ? 'Bạn' : 'Người bán'}
                   showHeader={showHeader}
                 />
               </div>

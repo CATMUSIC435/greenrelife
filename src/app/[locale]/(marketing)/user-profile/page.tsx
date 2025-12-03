@@ -1,6 +1,6 @@
 'use client';
 
-import { SignInButton, useUser } from '@clerk/nextjs';
+import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,7 +14,7 @@ export default function UserInfo() {
 
   if (!isSignedIn) {
     return (
-      <div className="flex justify-center">
+      <div className="flex h-screen w-screen items-center justify-center">
         <SignInButton mode="modal">
           <button type="button" className="w-full rounded bg-blue-500 px-6 py-2 text-white shadow-2xl transition hover:bg-blue-600">
             Đăng nhập
@@ -82,6 +82,12 @@ export default function UserInfo() {
           {' '}
           {formatDate(`${user.createdAt}`)}
         </p>
+
+        <SignOutButton redirectUrl="/">
+          <button type="button" className="w-full rounded bg-red-500 px-6 py-2 text-white shadow-2xl transition hover:bg-red-600">
+            Đăng xuất
+          </button>
+        </SignOutButton>
       </div>
 
       <div className="flex w-full flex-col gap-1">
@@ -92,7 +98,7 @@ export default function UserInfo() {
           Quản lý sản phẩm
         </Link>
         <Link href="/order" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Quản lý đơn đặt hành
+          Quản lý đơn đặt hàng
         </Link>
         <Link href="/chat" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý tin nhắn khách hàng
