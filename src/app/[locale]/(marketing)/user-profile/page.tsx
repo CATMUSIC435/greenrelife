@@ -104,7 +104,9 @@ export default function UserInfo() {
         </Link>
       </div>
       <div className="fixed bottom-14 left-0 w-full">
-        <h2 className="py-4 text-center text-4xl font-bold text-white uppercase text-shadow-2xs">Green Relife</h2>
+        <div className="mx-auto h-auto w-1/2">
+          <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
+        </div>
       </div>
     </div>
   );

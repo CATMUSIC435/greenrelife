@@ -14,7 +14,6 @@ export default async function Index() {
       <div className="mx-auto h-auto w-1/2">
         <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
       </div>
-      <h2 className="py-4 text-center text-4xl font-bold text-white uppercase text-shadow-2xs">Green Relife</h2>
       <div className="px-4 py-4">
         <div className="pb-4">
           <CardHeader />
