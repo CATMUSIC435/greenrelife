@@ -100,7 +100,7 @@ export default function UserInfo() {
           Quản lý tin nhắn khách hàng
         </Link>
         <Link href="/contact" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Liên hệ
+          Phản hồi admin
         </Link>
       </div>
       <div className="fixed bottom-14 left-0 w-full">
