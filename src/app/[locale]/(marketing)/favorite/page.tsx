@@ -41,6 +41,14 @@ export default function FavoriteProducts() {
     loadWooProducts();
   }, []);
 
+  const remoteFavourite = async (productId: number) => {
+    await fetch('/api/favorites/remove', {
+      method: 'POST',
+      body: JSON.stringify({ product_id: productId, user_id: user?.id }),
+    });
+    setProducts(prev => prev.filter(item => item.id !== productId));
+  };
+
   if (loading) {
     return <p className="p-5 text-gray-500">Đang tải...</p>;
   }
@@ -78,7 +86,13 @@ export default function FavoriteProducts() {
             {p.price ? `${p.price}₫` : 'Liên hệ'}
           </div>
 
-          <button type="button" className="mt-4 w-full rounded-lg bg-red-500 py-2 text-white hover:bg-red-600">
+          <button
+            onClick={() => {
+              remoteFavourite(p.id);
+            }}
+            type="button"
+            className="mt-4 w-full rounded-lg bg-red-500 py-2 text-white hover:bg-red-600"
+          >
             Xóa khỏi yêu thích
           </button>
         </div>

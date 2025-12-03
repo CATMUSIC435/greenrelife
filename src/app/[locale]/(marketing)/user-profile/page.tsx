@@ -84,7 +84,7 @@ export default function UserInfo() {
         </p>
 
         <SignOutButton redirectUrl="/">
-          <button type="button" className="mt-2 w-full rounded rounded-md bg-red-500 px-6 py-2 text-white shadow-2xl transition hover:bg-red-600">
+          <button type="button" className="mt-2 w-full rounded-md bg-red-500 px-6 py-2 text-white shadow-2xl transition hover:bg-red-600">
             Đăng xuất
           </button>
         </SignOutButton>

@@ -13,21 +13,25 @@ export default function SellerChatList() {
       .then(setList);
   }, [user]);
 
-  return (
-    <div className="space-y-3">
-      {list.map((c: any) => (
-        <Link
-          key={c.id}
-          href={`/chat/${c.id}`}
-          className="block rounded-lg border p-4 shadow-sm hover:bg-gray-100"
-        >
-          <p className="font-semibold">
-            Sản phẩm #
-            {c.product_id}
-          </p>
-          <p className="text-sm text-gray-600">{c.last_message}</p>
-        </Link>
-      ))}
-    </div>
-  );
+  return list.length === 0
+    ? (
+        <div>Không có tin nhắn</div>
+      )
+    : (
+        <div className="space-y-3">
+          {list.map((c: any) => (
+            <Link
+              key={c.id}
+              href={`/chat/${c.id}`}
+              className="block rounded-lg border p-4 shadow-sm hover:bg-gray-100"
+            >
+              <p className="font-semibold">
+                Sản phẩm #
+                {c.product_id}
+              </p>
+              <p className="text-sm text-gray-600">{c.last_message}</p>
+            </Link>
+          ))}
+        </div>
+      );
 }

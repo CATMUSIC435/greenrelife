@@ -17,7 +17,7 @@ type ProductListProps = {
 
 export default function ProductList({ products }: ProductListProps) {
   return (
-    <div className="mb-20 grid grid-cols-2 gap-4 md:grid-cols-4">
+    <div className="mb-20 grid grid-cols-2 gap-4">
       {products?.map(product => (
         <ServiceCard key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
       ))}

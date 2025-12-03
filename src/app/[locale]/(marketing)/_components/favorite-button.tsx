@@ -22,9 +22,11 @@ export function FavoriteButton({ productId }: { productId: number }) {
     }
   };
 
-  return (
-    <button type="button" onClick={toggleFavorite}>
-      {liked ? '💖' : '🤍'}
-    </button>
-  );
+  return user
+    ? (
+        <button type="button" onClick={toggleFavorite}>
+          {liked ? '💖' : '🤍'}
+        </button>
+      )
+    : null;
 }
