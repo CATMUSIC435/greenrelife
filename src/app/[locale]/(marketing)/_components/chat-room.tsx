@@ -19,7 +19,7 @@ type ClientMessage = {
   user: { name: string };
 };
 
-export default function ChatRoom({ id }: { id: string }) {
+export default function ChatRoom({ id, isSeller = false }: { id: string; isSeller?: boolean }) {
   const { user } = useUser();
   const [messages, setMessages] = useState<any>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +49,7 @@ export default function ChatRoom({ id }: { id: string }) {
   return (
     <div className="mx-auto flex max-w-xl flex-col border" style={{ height: '90vh' }}>
       {/* Messages */}
-      <RealtimeChat roomName={id} username={user?.emailAddresses[0]?.emailAddress ?? ''} messages={messages} />
+      <RealtimeChat roomName={id} username={user?.emailAddresses[0]?.emailAddress ?? ''} messages={messages} isSeller={isSeller} />
     </div>
   );
 }

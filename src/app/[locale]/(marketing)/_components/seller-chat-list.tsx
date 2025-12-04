@@ -22,7 +22,7 @@ export default function SellerChatList() {
           {list.map((c: any) => (
             <Link
               key={c.id}
-              href={`/chat/${c.id}`}
+              href={`/chat/seller/${c.id}`}
               className="block rounded-lg border p-4 shadow-sm hover:bg-gray-100"
             >
               <p className="font-semibold">

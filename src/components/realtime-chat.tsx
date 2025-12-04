@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 type RealtimeChatProps = {
   roomName: string;
   username: string;
+  isSeller?: boolean;
   onMessage?: (messages: ChatMessage[]) => void;
   messages?: ChatMessage[];
 };
@@ -33,6 +34,7 @@ export const RealtimeChat = ({
   username,
   onMessage,
   messages: initialMessages = [],
+  isSeller = false,
 }: RealtimeChatProps) => {
   const { containerRef, scrollToBottom } = useChatScroll();
 
@@ -120,7 +122,7 @@ export const RealtimeChat = ({
                 <ChatMessageItem
                   message={message}
                   isOwnMessage={message.user.name === username}
-                  who={message.user.name === username ? 'Bạn' : 'Người bán'}
+                  who={message.user.name === username && !isSeller ? 'Bạn' : 'Người bán'}
                   showHeader={showHeader}
                 />
               </div>

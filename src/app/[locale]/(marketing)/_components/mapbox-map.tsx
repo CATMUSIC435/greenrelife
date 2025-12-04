@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { useDebounce } from '@/hooks/use-debounce';
+import { useGeolocation } from '@/hooks/use-geolocation';
 
 export type MarkerItem = {
   id?: string | number;
@@ -37,6 +38,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
   markers = [],
   defaultIconUrl = DEFAULT_ICON,
 }) => {
+  const { position } = useGeolocation(true);
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -184,7 +186,14 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
           };
         })
         .filter(Boolean);
-
+      newMakers.push({
+        id: 0,
+        lng: Number(position.lat),
+        lat: Number(position.lng),
+        title: 'Địa điểm hiện tại của bạn',
+        description: '',
+        iconUrl: undefined,
+      });
       setMarkerInits(newMakers);
     };
     fetchMarkers(debouncedQuery);
