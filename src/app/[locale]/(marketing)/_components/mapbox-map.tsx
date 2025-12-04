@@ -199,7 +199,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
     fetchMarkers(debouncedQuery);
     markersRef.current.forEach(m => m.remove());
     markersRef.current = [];
-  }, [debouncedQuery]);
+  }, [debouncedQuery, position]);
 
   return (
     <div className={`${className} relative`}>
