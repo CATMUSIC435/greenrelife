@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useCart } from '@/stores/cart';
 
 export default function CartPage() {
-  const { items, increase, decrease, removeItem, total } = useCart();
+  const { items, increase, decrease, removeItem } = useCart();
 
   return (
     <div className="mx-auto max-w-3xl p-6">
@@ -66,12 +66,16 @@ export default function CartPage() {
       <div className="py-4 text-right">
         <p className="py-2 text-lg font-bold">
           Tổng:
-          {total()}
+          {items.reduce((s, i) => s + i.price * i.quantity, 0).toLocaleString()}
           ₫
         </p>
-        <Link href="/checkout" className="rounded-sm bg-blue-600 px-4 py-2 text-white shadow-2xs backdrop-blur-md">
-          Đặt hàng
-        </Link>
+        {items.length
+          ? (
+              <Link href="/checkout" className="rounded-sm bg-blue-600 px-4 py-2 text-white shadow-2xs backdrop-blur-md">
+                Đặt hàng
+              </Link>
+            )
+          : null}
       </div>
     </div>
   );

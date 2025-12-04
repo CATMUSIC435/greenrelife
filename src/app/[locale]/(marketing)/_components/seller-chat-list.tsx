@@ -20,11 +20,12 @@ export default function SellerChatList({ isUser }: SellerChatListProps) {
         .then(res => res.json())
         .then(setList);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return list.length === 0
     ? (
-        <div>Không có tin nhắn</div>
+        <div className="px-4 py-4 text-gray-400">Không có tin nhắn</div>
       )
     : (
         <div className="space-y-3">
