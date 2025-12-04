@@ -103,8 +103,8 @@ export default function UserInfo() {
           Phản hồi admin
         </Link>
       </div>
-      <div className="fixed bottom-14 left-0 w-full">
-        <div className="mx-auto h-auto w-1/2">
+      <div className="mt-4 w-full">
+        <div className="mx-auto h-auto w-2/3">
           <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
         </div>
       </div>

@@ -11,7 +11,7 @@ export default async function Index() {
   return (
     <div className="w-full pb-20">
       <UserInfo />
-      <div className="mx-auto h-auto w-1/2">
+      <div className="mx-auto h-auto w-2/3">
         <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
       </div>
       <div className="px-4 py-4">
