@@ -3,14 +3,23 @@ import { useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function SellerChatList() {
+type SellerChatListProps = {
+  isUser?: boolean;
+};
+export default function SellerChatList({ isUser }: SellerChatListProps) {
   const { user } = useUser();
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch('/api/chat/seller' + `?user=${user?.emailAddresses[0]?.emailAddress}`)
-      .then(res => res.json())
-      .then(setList);
+    if (isUser) {
+      fetch('/api/chat/user' + `?user=${user?.emailAddresses[0]?.emailAddress}`)
+        .then(res => res.json())
+        .then(setList);
+    } else {
+      fetch('/api/chat/seller' + `?user=${user?.emailAddresses[0]?.emailAddress}`)
+        .then(res => res.json())
+        .then(setList);
+    }
   }, [user]);
 
   return list.length === 0

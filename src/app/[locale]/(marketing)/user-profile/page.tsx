@@ -96,11 +96,14 @@ export default function UserInfo() {
         <Link href="/order" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý đơn đặt hàng
         </Link>
+        <Link href="/chat/user" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
+          Quản lý tin nhắn của bạn
+        </Link>
         <Link href="/chat" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
           Quản lý tin nhắn khách hàng
         </Link>
         <Link href="/contact" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Phản hồi admin
+          Đóng góp ý kiến
         </Link>
       </div>
       <div className="mt-4 w-full">
