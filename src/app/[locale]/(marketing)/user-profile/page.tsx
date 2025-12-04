@@ -14,7 +14,7 @@ export default function UserInfo() {
 
   if (!isSignedIn) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center">
         <SignInButton mode="modal">
           <button type="button" className="w-full rounded bg-blue-500 px-6 py-2 text-white shadow-2xl transition hover:bg-blue-600">
             Đăng nhập

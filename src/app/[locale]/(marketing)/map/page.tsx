@@ -56,7 +56,7 @@ export default async function Index() {
       zoom={12}
       markers={markers}
       height="h-screen"
-      className="h-screen w-screen"
+      className="h-screen w-screen md:w-md"
       defaultIconUrl="/assets/images/placeholder.png"
     />
   );
