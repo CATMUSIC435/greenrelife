@@ -182,7 +182,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
             lat: Number(match[1]),
             title: p.name,
             description: p.short_description?.replace(/<[^>]+>/g, '') ?? '',
-            iconUrl: p.images?.[0]?.src ?? undefined,
+            iconUrl: p.images?.[0]?.src ?? defaultIconUrl,
           };
         })
         .filter(Boolean);
@@ -192,7 +192,7 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         lat: Number(position.lng),
         title: 'Địa điểm hiện tại của bạn',
         description: '',
-        iconUrl: undefined,
+        iconUrl: defaultIconUrl,
       });
       setMarkerInits(newMakers);
     };
