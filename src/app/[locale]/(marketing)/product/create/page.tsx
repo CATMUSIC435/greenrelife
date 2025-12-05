@@ -7,7 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { parseLatLng } from '@/lib/utils';
 import { formatDatePretty } from '@/utils/format-date-pretty';
+import MapLocationPicker from '../../_components/map-location-picker';
 
 export default function CreateProductPage() {
   const { user } = useUser();
@@ -60,13 +62,10 @@ export default function CreateProductPage() {
         images: imageIds,
         featured_media: featuredMediaId,
         status: 'publish',
-        creator_name: user?.emailAddresses[0]?.emailAddress,
         categories: [{ id: isFix ? 32 : 20 }],
         meta_data: [
-          {
-            key: '_product_location',
-            value: location,
-          },
+          { key: '_creator_name', value: user?.emailAddresses[0]?.emailAddress },
+          { key: '_product_location', value: location },
         ],
       };
 
@@ -139,11 +138,17 @@ export default function CreateProductPage() {
       {/* Giá sản phẩm */}
       <div className="space-y-1">
         <Label htmlFor="product-location" className="text-white">Vị trí sản phẩm (lat,lng)</Label>
+        <MapLocationPicker
+          value={parseLatLng(location)}
+          onChange={pos => setLocation(pos)}
+          height="450px"
+        />
+
         <Input
           id="product-location"
           placeholder="Nhập tọa độ ví dụ: 10.8000,106.6667"
+          disabled
           value={location}
-          onChange={e => setLocation(e.target.value)}
         />
       </div>
 
