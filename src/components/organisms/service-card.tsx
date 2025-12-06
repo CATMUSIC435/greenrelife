@@ -1,8 +1,11 @@
+import type { ProductCategory } from '@/types/product-category';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FavoriteButton } from '@/app/[locale]/(marketing)/_components/favorite-button';
 import { Card, CardContent } from '@/components/ui/card';
+import { hasCategory } from '@/utils/has-category';
+import { Badge } from '../ui/badge';
 
 type ServiceCardProps = {
   id: number;
@@ -10,9 +13,11 @@ type ServiceCardProps = {
   title: string;
   description: string;
   price: string;
+  categories: ProductCategory[];
 };
 
-export default function ServiceCard({ id, title, description, img, price }: ServiceCardProps) {
+export default function ServiceCard({ id, title, description, img, price, categories }: ServiceCardProps) {
+  const hasCat = hasCategory(categories, 20);
   return (
     <Card className="w-full gap-2 overflow-hidden rounded-2xl bg-transparent py-0 shadow-2xl  transition-all duration-300 hover:shadow-lg md:gap-4">
 
@@ -27,11 +32,11 @@ export default function ServiceCard({ id, title, description, img, price }: Serv
         <div className="absolute top-3 right-3 rounded-full bg-white/80 p-1 shadow transition hover:scale-110">
           <FavoriteButton productId={id} />
         </div>
-        {/* <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
+        <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
           <Badge className=" bg-blue-100 text-blue-600 hover:bg-blue-100">
-
+            {hasCat ? 'Dịch vụ' : 'Sữa chữa'}
           </Badge>
-        </div> */}
+        </div>
       </div>
 
       <CardContent className="px-2 py-1">

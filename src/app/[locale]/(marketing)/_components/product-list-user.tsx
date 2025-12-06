@@ -1,4 +1,5 @@
 'use client';
+import type { ProductCategory } from '@/types/product-category';
 import { useUser } from '@clerk/nextjs';
 import ServiceCard from '@/components/organisms/service-card';
 
@@ -11,6 +12,7 @@ export type Product = {
   images: { src: string }[];
   permalink?: string;
   creator: string;
+  categories: ProductCategory[];
 };
 
 type ProductListProps = {
@@ -23,7 +25,7 @@ export default function ProductListUser({ products }: ProductListProps) {
     <div className="mb-20 grid grid-cols-2 gap-4">
       {products?.map((product) => {
         return product.creator === `${user?.emailAddresses[0]?.emailAddress}`
-          ? <ServiceCard key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price ? product.price : 'Liên hệ'} />
+          ? <ServiceCard categories={product.categories} key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price ? product.price : 'Liên hệ'} />
           : null;
       })}
     </div>

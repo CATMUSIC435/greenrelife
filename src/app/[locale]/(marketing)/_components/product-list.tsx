@@ -1,3 +1,4 @@
+import type { ProductCategory } from '@/types/product-category';
 import ServiceCard from '@/components/organisms/service-card';
 
 export type Product = {
@@ -9,6 +10,7 @@ export type Product = {
   images: { src: string }[];
   permalink?: string;
   creator: string;
+  categories: ProductCategory[];
 };
 
 type ProductListProps = {
@@ -19,7 +21,7 @@ export default function ProductList({ products }: ProductListProps) {
   return (
     <div className="mb-20 grid grid-cols-2 gap-4">
       {products?.map(product => (
-        <ServiceCard key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
+        <ServiceCard categories={product.categories} key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
       ))}
     </div>
   );

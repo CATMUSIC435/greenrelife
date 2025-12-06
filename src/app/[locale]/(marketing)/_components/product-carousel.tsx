@@ -1,5 +1,6 @@
 'use client';
 
+import type { ProductCategory } from '@/types/product-category';
 import useEmblaCarousel from 'embla-carousel-react';
 import { useEffect, useState } from 'react';
 import ServiceCard from '@/components/organisms/service-card';
@@ -9,6 +10,7 @@ type Product = {
   name: string;
   images: { src: string }[];
   price: string;
+  categories: ProductCategory[];
 };
 
 type ProductCarouselProps = {
@@ -47,7 +49,7 @@ export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
             key={product.id}
             className="shrink-0 basis-1/2 px-3"
           >
-            <ServiceCard id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
+            <ServiceCard categories={product.categories} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
           </div>
         ))}
       </div>
