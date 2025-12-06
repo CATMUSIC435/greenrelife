@@ -13,17 +13,6 @@ export default async function Index() {
       <UserInfo />
       <div className="mx-auto h-auto w-2/3">
         <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
-        <div className="py-2">
-          <h2 className="text-center text-sm font-bold text-white text-shadow-2xs text-shadow-lime-50 md:text-lg">
-            Bản lĩnh sinh viên
-            <br />
-            {' '}
-            -
-            <br />
-            {' '}
-            Tái sinh đồ cũ
-          </h2>
-        </div>
       </div>
       <div className="px-4 py-4">
         <div className="pb-4">
