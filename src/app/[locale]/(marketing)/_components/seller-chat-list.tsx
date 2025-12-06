@@ -25,7 +25,7 @@ export default function SellerChatList({ isUser }: SellerChatListProps) {
 
   return list.length === 0
     ? (
-        <div className="px-4 py-4 text-gray-400">Không có tin nhắn</div>
+        <div className="px-4 py-4  text-black">Không có tin nhắn</div>
       )
     : (
         <div className="space-y-3">
@@ -39,7 +39,7 @@ export default function SellerChatList({ isUser }: SellerChatListProps) {
                 Sản phẩm #
                 {c.product_id}
               </p>
-              <p className="text-sm text-gray-600">{c.last_message}</p>
+              <p className="text-sm text-black">{c.last_message}</p>
             </Link>
           ))}
         </div>
