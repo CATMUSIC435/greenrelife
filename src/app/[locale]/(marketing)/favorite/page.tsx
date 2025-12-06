@@ -52,12 +52,12 @@ export default function FavoriteProducts() {
   };
 
   if (loading) {
-    return <p className="p-5 text-gray-500">Đang tải...</p>;
+    return <p className="p-5 text-black">Đang tải...</p>;
   }
 
   if (products.length === 0) {
     return (
-      <p className="p-5 text-gray-500">
+      <p className="p-5 text-black">
         Bạn chưa yêu thích sản phẩm nào!
       </p>
     );
