@@ -25,10 +25,12 @@ function formatDate(date: Date | undefined) {
     year: 'numeric',
   });
 }
-
-export function CalendarCheckout() {
+type CalendarCheckoutProps = {
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+};
+export function CalendarCheckout({ setValue, value }: CalendarCheckoutProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('Trong 0 ngày');
   const [date, setDate] = React.useState<Date | undefined>(
     parseDate(value) || undefined,
   );

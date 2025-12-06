@@ -2,6 +2,8 @@
 
 import { useUser } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
+import { uuid } from 'uuidv4';
+import CancelOrderPopup from '../_components/cancel-order-popup';
 
 type Order = {
   id: number;
@@ -16,16 +18,20 @@ export default function OrdersPage() {
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [genUID, setGenUID] = useState('');
 
   useEffect(() => {
-    fetch('/api/orders' + `?user_email=${user?.emailAddresses}`)
-      .then(res => res.json())
-      .then((data) => {
-        setOrders(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+    if (user) {
+      fetch('/api/orders' + `?user_email=${user?.emailAddresses[0]?.emailAddress}`)
+        .then(res => res.json())
+        .then((data) => {
+          setOrders(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [user, genUID]);
 
   if (loading) {
     return <p className="p-5">Đang tải đơn hàng...</p>;
@@ -74,9 +80,30 @@ export default function OrdersPage() {
 
             <p className="mt-3 font-semibold">
               Tổng tiền:
-              {order.total}
+              {Number(order.total).toLocaleString()}
               ₫
             </p>
+            {order?.status?.toLowerCase() === 'pending'
+              ? (
+                  <div className="p-10">
+                    <button
+                      type="button"
+                      onClick={() => setOpen(true)}
+                      className="w-full rounded-lg bg-red-600 px-4 py-2 text-white"
+                    >
+                      Hủy đơn hàng
+                    </button>
+
+                    {open && (
+                      <CancelOrderPopup
+                        onChange={() => setGenUID(uuid())}
+                        id={order.id}
+                        onClose={() => setOpen(false)}
+                      />
+                    )}
+                  </div>
+                )
+              : null}
           </div>
         ))}
       </div>

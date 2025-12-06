@@ -18,6 +18,7 @@ type CheckoutServiceProps = {
 export function CheckoutService({ items }: CheckoutServiceProps) {
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState('Trong 0 ngày');
 
   const [form, setForm] = useState({
     first_name: '',
@@ -45,6 +46,7 @@ export function CheckoutService({ items }: CheckoutServiceProps) {
       set_paid: false,
       billing: form,
       line_items: products,
+      customer_note: value ?? '',
     };
 
     const res = await fetch('/api/checkout', {
@@ -151,7 +153,7 @@ export function CheckoutService({ items }: CheckoutServiceProps) {
           </div>
 
           <div className="pt-2">
-            <CalendarCheckout />
+            <CalendarCheckout value={value} setValue={setValue} />
           </div>
 
           {/* BUTTON */}
