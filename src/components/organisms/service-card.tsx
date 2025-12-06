@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FavoriteButton } from '@/app/[locale]/(marketing)/_components/favorite-button';
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { hasCategory } from '@/utils/has-category';
 import { Badge } from '../ui/badge';
 
@@ -33,8 +34,8 @@ export default function ServiceCard({ id, title, description, img, price, catego
           <FavoriteButton productId={id} />
         </div>
         <div className="absolute bottom-1 left-1  flex w-full items-center justify-between">
-          <Badge className=" bg-blue-100 text-blue-600 hover:bg-blue-100">
-            {hasCat ? 'Dịch vụ' : 'Sữa chữa'}
+          <Badge className={cn(hasCat ? 'bg-blue-100 text-blue-600 hover:bg-blue-100' : 'bg-lime-100 text-lime-600 hover:bg-lime-100')}>
+            {hasCat ? 'Dịch vụ' : 'Sản phẩm'}
           </Badge>
         </div>
       </div>
