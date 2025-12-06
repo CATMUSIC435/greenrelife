@@ -55,13 +55,13 @@
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.7",
     "embla-carousel-react": "^8.6.0",
-    "next": "^16.0.3",
+    "next": "16.0.7",
     "next-intl": "^4.4.0",
     "pg": "^8.16.3",
     "posthog-js": "^1.292.0",
-    "react": "^19.2.0",
+    "react": "19.2.1",
     "react-day-picker": "^9.11.3",
-    "react-dom": "^19.2.0",
+    "react-dom": "19.2.1",
     "react-hook-form": "^7.66.0",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.1.12"
@@ -76,8 +76,8 @@
     "@eslint-react/eslint-plugin": "^2.3.5",
     "@faker-js/faker": "^10.1.0",
     "@lingual/i18n-check": "^0.8.12",
-    "@next/bundle-analyzer": "^16.0.3",
-    "@next/eslint-plugin-next": "^16.0.3",
+    "@next/bundle-analyzer": "16.0.7",
+    "@next/eslint-plugin-next": "16.0.7",
     "@playwright/test": "^1.56.1",
     "@spotlightjs/spotlight": "^4.5.1",
     "@storybook/addon-a11y": "^10.0.2",
@@ -90,7 +90,7 @@
     "@types/mapbox-gl": "^3.4.1",
     "@types/node": "^24.10.1",
     "@types/pg": "^8.15.6",
-    "@types/react": "^19.2.4",
+    "@types/react": "19.2.7",
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/browser": "^4.0.6",
     "@vitest/browser-playwright": "^4.0.6",
@@ -149,5 +149,8 @@
       "@semantic-release/release-notes-generator",
       "@semantic-release/github"
     ]
+  },
+  "overrides": {
+    "@types/react": "19.2.7"
   }
 }
