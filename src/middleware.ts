@@ -10,14 +10,11 @@ const handleI18nRouting = createMiddleware(routing);
 
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
-  // '/:locale(.*)',
 ]);
 
 const isAuthPage = createRouteMatcher([
   '/sign-in(.*)',
-  '/:locale/sign-in(.*)',
   '/sign-up(.*)',
-  '/:locale/sign-up(.*)',
 ]);
 
 // Improve security with Arcjet
