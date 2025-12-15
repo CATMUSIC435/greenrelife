@@ -7,6 +7,7 @@ export default async function Index() {
     headers: {
       Authorization: `Basic ${btoa('ck_199523ebb78a02bb0d6ee9de11ff26d952a589bb:cs_9bbd84666696485dbd1bec40f16c385d39d5af43')}`,
     },
+    next: { revalidate: 10 },
   });
   const products: Array<Product> = await res.json();
   return (
