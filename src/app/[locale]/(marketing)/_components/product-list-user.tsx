@@ -21,13 +21,15 @@ type ProductListProps = {
 
 export default function ProductListUser({ products }: ProductListProps) {
   const { user } = useUser();
-  return (
-    <div className="mb-20 grid grid-cols-2 gap-4">
-      {products?.map((product) => {
-        return product.creator === `${user?.emailAddresses[0]?.emailAddress}`
-          ? <ServiceCard categories={product.categories} key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price ? product.price : 'Liên hệ'} />
-          : null;
-      })}
-    </div>
-  );
+  return user
+    ? (
+        <div className="mb-20 grid grid-cols-2 gap-4">
+          {products?.map((product) => {
+            return product.creator === `${user?.emailAddresses[0]?.emailAddress}`
+              ? <ServiceCard categories={product.categories} key={product.id} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price ? product.price : 'Liên hệ'} />
+              : null;
+          })}
+        </div>
+      )
+    : null;
 }
