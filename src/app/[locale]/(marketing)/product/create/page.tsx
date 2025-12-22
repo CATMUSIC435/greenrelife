@@ -32,7 +32,7 @@ export default function CreateProductPage() {
     const res = await fetch('https://greenrelife.dxmd.vn/wp-json/wp/v2/media', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjU3Njc5MTIsIm5iZiI6MTc2NTc2NzkxMiwiZXhwIjoxNzY2MzcyNzEyLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.pa9I9UTw3uvy4B_grP0zNMxt85cdo4ZvKOWt_W1QgoI`,
+        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjYzNzUxMDEsIm5iZiI6MTc2NjM3NTEwMSwiZXhwIjoxNzY2OTc5OTAxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.woJBzu7oYMq4LJd6-YwQ9oUR9I1Gzmr_Y4pKGr-C0L0`,
         'Content-Disposition': `attachment; filename="${file.name}"`,
       },
       body: form,
@@ -73,7 +73,7 @@ export default function CreateProductPage() {
         method: 'POST',
         headers: {
           'Authorization':
-              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjU3Njc5MTIsIm5iZiI6MTc2NTc2NzkxMiwiZXhwIjoxNzY2MzcyNzEyLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.pa9I9UTw3uvy4B_grP0zNMxt85cdo4ZvKOWt_W1QgoI`,
+              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjYzNzUxMDEsIm5iZiI6MTc2NjM3NTEwMSwiZXhwIjoxNzY2OTc5OTAxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.woJBzu7oYMq4LJd6-YwQ9oUR9I1Gzmr_Y4pKGr-C0L0`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
