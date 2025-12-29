@@ -24,9 +24,9 @@ export default function MenuCategory() {
 
   return (
     <div className="w-full overflow-x-auto md:hidden">
-      <ul className="grid grid-cols-3 gap-4">
+      <ul className="grid grid-cols-3 gap-4 py-2">
         {menuItems.map(item => (
-          <li key={item.label} className="relative flex min-w-[60px] flex-col items-center rounded-md py-4 shadow-2xl  backdrop-blur-md">
+          <li key={item.label} className="relative flex min-w-[60px] flex-col items-center rounded-md py-4 shadow-md  backdrop-blur-md">
             <button
               type="button"
               onClick={() => {

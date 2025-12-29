@@ -11,6 +11,8 @@ type Product = {
   images: { src: string }[];
   price: string;
   categories: ProductCategory[];
+  average_rating: string;
+  stock_quantity: number;
 };
 
 type ProductCarouselProps = {
@@ -24,7 +26,7 @@ export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await fetch(
-        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?category=${id}&per_page=10`,
+        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?category=${id}&per_page=10&stock_status=instock`,
         {
           headers: {
             Authorization:
@@ -35,6 +37,8 @@ export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
       );
 
       const data = await res.json();
+      console.log(data);
+      
       setProducts(data);
     };
 
@@ -49,7 +53,7 @@ export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
             key={product.id}
             className="shrink-0 basis-1/2 px-3"
           >
-            <ServiceCard categories={product.categories} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} />
+            <ServiceCard quantity={product.stock_quantity} categories={product.categories} id={product.id} title={product.name} img={product.images?.[0]?.src || '/placeholder.png'} description="" price={product.price} rating={product.average_rating} />
           </div>
         ))}
       </div>

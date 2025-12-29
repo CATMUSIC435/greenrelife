@@ -22,7 +22,7 @@ export default async function Index() {
           <MenuCategory />
         </div>
         <div className="py-2">
-          <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white shadow-2xl">Sửa chữa</h2>
+          <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white">Sửa chữa</h2>
           <div className="pt-2">
             <ProductCarousel id={20} />
           </div>
@@ -32,14 +32,14 @@ export default async function Index() {
           <CarouselHeader />
         </div>
         <div className="py-2">
-          <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white shadow-2xl">Bán hàng</h2>
+          <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white">Bán hàng</h2>
           <div className="pt-2">
             <ProductCarousel id={32} />
           </div>
         </div>
 
         <div className="py-2">
-          <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white shadow-2xl">Tin tức</h2>
+          <h2 className="mb-2 pb-1 text-center text-2xl font-bold text-white">Tin tức</h2>
           <div className="pt-2">
             <NewsCarousel />
           </div>

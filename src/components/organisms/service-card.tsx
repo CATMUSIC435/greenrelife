@@ -15,12 +15,14 @@ type ServiceCardProps = {
   description: string;
   price: string;
   categories: ProductCategory[];
+  rating: string;
+  quantity: number;
 };
 
-export default function ServiceCard({ id, title, description, img, price, categories }: ServiceCardProps) {
+export default function ServiceCard({ id, title, description, img, price, categories, rating, quantity }: ServiceCardProps) {
   const hasCat = hasCategory(categories, 20);
   return (
-    <Card className="w-full gap-2 overflow-hidden rounded-2xl bg-transparent py-0 shadow-2xl  transition-all duration-300 hover:shadow-lg md:gap-4">
+    <Card className="w-full gap-2 overflow-hidden rounded-2xl bg-transparent py-0 transition-all duration-300 hover:shadow-lg md:gap-4 h-full">
 
       <div className="relative">
         <Image
@@ -41,9 +43,17 @@ export default function ServiceCard({ id, title, description, img, price, catego
       </div>
 
       <CardContent className="px-2 py-1">
-        <p className="text-xs">
+        <p className="text-sm font-bold pb-1 text-orange-600">
           {price ? `${Number(price).toLocaleString()} đ` : 'Liên hệ'}
         </p>
+        <div className='flex justify-between'>
+          <p className="text-xs font-medium">
+            Số lượng :
+          </p>
+          <p className="text-xs font-bold">
+            {`${quantity ?? 0}`}
+          </p>
+        </div>
         <Link href={`/search/${id}`}>
           <h3 className="mb-1 line-clamp-2 font-sans text-sm">
             {title}
@@ -60,7 +70,7 @@ export default function ServiceCard({ id, title, description, img, price, catego
 
           <div className="flex items-center gap-1">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-            <span className="text-xs font-semibold">4.9</span>
+            <span className="text-xs font-semibold">{rating}</span>
           </div>
         </div>
       </CardContent>

@@ -29,7 +29,7 @@ export default function NewsCarousel() {
   }, []);
 
   return (
-    <div className="overflow-hidden" ref={emblaRef}>
+    <div className="overflow-hidden py-2" ref={emblaRef}>
       <div className="flex">
         {posts.map((post) => {
           return (
@@ -38,7 +38,7 @@ export default function NewsCarousel() {
               className="shrink-0 basis-1/2 px-1" // hiển thị 2 tin tức mỗi slide
             >
               <Link href={`/blog/${post.slug}`}>
-                <div className="flex h-full flex-col rounded-xl px-2 py-1 shadow-2xl">
+                <div className="flex h-full flex-col rounded-xl px-1 py-2 border-[1px] border-white">
                   <Image
                     src={post.yoast_head_json.og_image[0]?.url ?? ''}
                     alt={post.title.rendered}

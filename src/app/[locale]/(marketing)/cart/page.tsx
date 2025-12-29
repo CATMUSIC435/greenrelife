@@ -63,11 +63,13 @@ export default function CartPage() {
         ))}
       </div>
 
-      <div className="py-4 text-right">
-        <p className="py-2 text-lg font-bold">
-          Tổng:
-          {items.reduce((s, i) => s + i.price * i.quantity, 0).toLocaleString()}
+      <div className="py-4">
+        <p className="py-2 text-lg font-medium flex justify-between w-full">
+          <span>Tổng:</span>
+          <span>
+            {items.reduce((s, i) => s + i.price * i.quantity, 0).toLocaleString()}
           ₫
+          </span>
         </p>
         {items.length
           ? (

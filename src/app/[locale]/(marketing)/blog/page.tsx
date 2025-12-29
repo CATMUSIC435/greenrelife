@@ -3,6 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import CoursesCarrousel from '../_components/course-carousel';
+import { formatDateDMY } from '@/utils/times';
+import { time } from 'console';
 
 export default async function Index() {
   const WORDPRESS_API = process.env.NEXT_PUBLIC_WORDPRESS_API ?? '';
@@ -39,7 +41,7 @@ export default async function Index() {
             <article key={post.id} className={cn('flex max-w-xl flex-col items-start justify-between rounded-md bg-center px-4 py-4 md:rounded-2xl shadow-2xl', !index ? 'col-span-2 pt-30' : 'pt-12')} style={{ backgroundImage: `url(${post.yoast_head_json.og_image[0]?.url})` }}>
               <div className="flex items-center gap-x-4 text-xs">
                 <time dateTime={post.date} className="text-white">
-                  {post.date}
+                  {formatDateDMY(post.date)}
                 </time>
               </div>
               <div className="group relative grow">
@@ -71,7 +73,7 @@ export default async function Index() {
               <div className="col-span-3">
                 <div className="flex items-center gap-x-4 text-xs">
                   <time dateTime={post.date} className="text-black">
-                    {post.date}
+                    {formatDateDMY(post.date)}
                   </time>
                 </div>
                 <div className="group relative grow">
