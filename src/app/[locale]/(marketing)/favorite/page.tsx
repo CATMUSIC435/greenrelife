@@ -2,7 +2,6 @@
 
 import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
-import { p } from 'node_modules/framer-motion/dist/types.d-BJcRxCew';
 import { useEffect, useState } from 'react';
 
 type WooProduct = {
