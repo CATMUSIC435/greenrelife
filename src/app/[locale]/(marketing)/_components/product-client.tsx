@@ -15,7 +15,6 @@ import { hasCategory } from '@/utils/has-category';
 type WooProduct = any;
 
 export default function ProductClient({ product }: { product: WooProduct }) {
-  console.log(product);
   
   const hasCat = hasCategory(product.categories, 20);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
