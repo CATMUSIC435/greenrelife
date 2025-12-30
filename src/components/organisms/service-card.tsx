@@ -43,7 +43,7 @@ export default function ServiceCard({ id, title, description, img, price, catego
       </div>
 
       <CardContent className="px-2 py-1">
-        <p className="text-sm font-bold pb-1 text-orange-600">
+        <p className="text-xs font-medium pb-1 text-red-600">
           {price ? `${Number(price).toLocaleString()} đ` : 'Liên hệ'}
         </p>
         <div className='flex justify-between'>

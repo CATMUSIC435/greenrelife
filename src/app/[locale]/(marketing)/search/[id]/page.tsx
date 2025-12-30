@@ -58,8 +58,8 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
         <div className="lg:col-span-2">
           <h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
 
-          <div className="mb-4 flex items-center gap-4">
-            <p className="text-2xl font-semibold text-red-600">
+          <div className="mb-1 flex items-center gap-4">
+            <p className="text-xl font-bold text-red-600">
               {product.price ? `${Number(product.price).toLocaleString()} đ` : 'Liên hệ'}
             </p>
 
@@ -73,7 +73,14 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
               {product.stock_status === 'instock' ? 'Còn hàng' : 'Hết hàng'}
             </p>
           </div>
-
+        <div className='flex gap-1 w-full mb-4 '>
+          <p className="text-base font-medium">
+            Số lượng: 
+          </p>
+          <p className="text-base font-bold">
+            {`${product.stock_quantity ?? 0}`}
+          </p>
+        </div>
           {/* Short description (server-rendered) */}
           <div className="prose mb-6 max-w-none" dangerouslySetInnerHTML={{ __html: product.short_description || '' }} />
 

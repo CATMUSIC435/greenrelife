@@ -39,7 +39,7 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
       params.append('per_page', '100');
 
       const res = await fetch(
-        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?${params.toString()}`,
+        `https://greenrelife.dxmd.vn/wp-json/wc/v3/products?${params.toString()}&stock_status=instock`,
         {
           headers: {
             Authorization:

@@ -5,6 +5,20 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export interface MenuItem {
+  href: string;
+  label: string;
+}
+
+export const menuList: MenuItem[] = [
+  { href: "/favorite", label: "Quản lý sản phẩm yêu thích" },
+  { href: "/product", label: "Quản lý sản phẩm" },
+  { href: "/order", label: "Quản lý đơn đặt hàng" },
+  { href: "/chat/user", label: "Quản lý tin nhắn của bạn" },
+  { href: "/chat", label: "Quản lý tin nhắn khách hàng" },
+  { href: "/contact", label: "Đóng góp ý kiến" },
+];
+
 export default function UserInfo() {
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -87,24 +101,16 @@ export default function UserInfo() {
       </div>
 
       <div className="flex w-full flex-col gap-1">
-        <Link href="/favorite" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Quản lý sản phẩm yêu thích
+     {menuList.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="rounded-md px-2 py-4 font-bold shadow-2xl
+                     text-indigo-900 backdrop-blur-lg text-shadow-2xs"
+        >
+          {item.label}
         </Link>
-        <Link href="/product" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Quản lý sản phẩm
-        </Link>
-        <Link href="/order" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Quản lý đơn đặt hàng
-        </Link>
-        <Link href="/chat/user" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Quản lý tin nhắn của bạn
-        </Link>
-        <Link href="/chat" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Quản lý tin nhắn khách hàng
-        </Link>
-        <Link href="/contact" className="rounded-md px-2 py-4 font-bold shadow-2xl backdrop-blur-lg text-shadow-2xs">
-          Đóng góp ý kiến
-        </Link>
+      ))}
       </div>
       <div className="mt-4 w-full">
         <div className="mx-auto h-auto w-2/3">

@@ -32,7 +32,7 @@ export default function CreateProductPage() {
     const res = await fetch('https://greenrelife.dxmd.vn/wp-json/wp/v2/media', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjYzNzUxMDEsIm5iZiI6MTc2NjM3NTEwMSwiZXhwIjoxNzY2OTc5OTAxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.woJBzu7oYMq4LJd6-YwQ9oUR9I1Gzmr_Y4pKGr-C0L0`,
+        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjcwNjY2NTEsIm5iZiI6MTc2NzA2NjY1MSwiZXhwIjoxNzY3NjcxNDUxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.R81NIINTcHEAUUbMY3e9fxcQBBTh6FmSzGnPd3t2kls`,
         'Content-Disposition': `attachment; filename="${file.name}"`,
       },
       body: form,
@@ -46,14 +46,13 @@ export default function CreateProductPage() {
     try {
       setLoading(true);
 
-      // 1. Upload tất cả ảnh
       const imageIds = [];
       for (const img of images) {
         const media = await uploadImage(img);
-        imageIds.push({ id: media.id }); // WooCommerce chỉ cần { id: number }
+        imageIds.push({ id: media.id });
       }
       const featuredMediaId = imageIds.length ? imageIds[0]?.id : undefined;
-      // 2. Gửi API tạo sản phẩm
+
       const payload = {
         name,
         regular_price: price,
@@ -63,6 +62,9 @@ export default function CreateProductPage() {
         featured_media: featuredMediaId,
         status: 'publish',
         categories: [{ id: isFix ? 32 : 20 }],
+        stock_quantity: 1,
+        manage_stock: true,
+        stock_status: "instock",
         meta_data: [
           { key: '_creator_name', value: user?.emailAddresses[0]?.emailAddress },
           { key: '_product_location', value: location },
@@ -73,7 +75,7 @@ export default function CreateProductPage() {
         method: 'POST',
         headers: {
           'Authorization':
-              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjYzNzUxMDEsIm5iZiI6MTc2NjM3NTEwMSwiZXhwIjoxNzY2OTc5OTAxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.woJBzu7oYMq4LJd6-YwQ9oUR9I1Gzmr_Y4pKGr-C0L0`,
+              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjcwNjY2NTEsIm5iZiI6MTc2NzA2NjY1MSwiZXhwIjoxNzY3NjcxNDUxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.R81NIINTcHEAUUbMY3e9fxcQBBTh6FmSzGnPd3t2kls`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
@@ -95,7 +97,6 @@ export default function CreateProductPage() {
     <div className="mx-auto space-y-6 rounded-lg px-4 pt-2 pb-20 shadow-md">
       <h1 className="w-full text-center text-2xl font-bold text-white">Đăng sản phẩm</h1>
 
-      {/* Tên sản phẩm */}
       <div className="space-y-1">
         <Label htmlFor="name" className="text-white">Tên sản phẩm</Label>
         <Input
@@ -111,7 +112,6 @@ export default function CreateProductPage() {
         <Button className="w-full bg-blue-600" onClick={() => setIsFix(prev => !prev)}>{isFix ? 'Sữa chữa' : 'Bán'}</Button>
       </div>
 
-      {/* Giá sản phẩm */}
       <div className="space-y-1">
         <Label htmlFor="price" className="text-white">Giá</Label>
         <Input

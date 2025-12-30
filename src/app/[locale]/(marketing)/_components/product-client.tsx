@@ -15,6 +15,8 @@ import { hasCategory } from '@/utils/has-category';
 type WooProduct = any;
 
 export default function ProductClient({ product }: { product: WooProduct }) {
+  console.log(product);
+  
   const hasCat = hasCategory(product.categories, 20);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCart(s => s.addItem);
@@ -57,6 +59,7 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         selectedOptions={selectedOptions}
         onChange={handleOptionChange}
       />
+      {product.stock_quantity ? <>
       {hasCat ? (
         <Link
           href={`/checkout/${product.id}`}
@@ -104,6 +107,7 @@ export default function ProductClient({ product }: { product: WooProduct }) {
               </button>
             </div>
           )}
+          </> : null}
       { user ? (
         <button
           className="mt-2 w-full rounded-lg bg-lime-600 px-4 py-2 text-white"

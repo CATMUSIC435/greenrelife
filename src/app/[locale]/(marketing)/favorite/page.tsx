@@ -2,6 +2,7 @@
 
 import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
+import { p } from 'node_modules/framer-motion/dist/types.d-BJcRxCew';
 import { useEffect, useState } from 'react';
 
 type WooProduct = {
@@ -85,7 +86,7 @@ export default function FavoriteProducts() {
           </div>
 
           <div className="mt-2 text-right font-bold">
-            {p.price ? `${p.price}₫` : 'Liên hệ'}
+            {p.price ? `${Number(p.price).toLocaleString()} ₫` : 'Liên hệ'}
           </div>
 
           <button
