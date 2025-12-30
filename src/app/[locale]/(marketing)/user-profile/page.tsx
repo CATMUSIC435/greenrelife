@@ -5,12 +5,12 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export interface MenuItem {
+interface MenuItem {
   href: string;
   label: string;
 }
 
-export const menuList: MenuItem[] = [
+const menuList: MenuItem[] = [
   { href: "/favorite", label: "Quản lý sản phẩm yêu thích" },
   { href: "/product", label: "Quản lý sản phẩm" },
   { href: "/order", label: "Quản lý đơn đặt hàng" },
