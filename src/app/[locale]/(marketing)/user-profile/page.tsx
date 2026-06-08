@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FadeIn } from '@/components/ui/fade-in';
 import { SectionTitle } from '@/components/ui/section-title';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Heart, Package, ShoppingBag, MessageSquare, MessagesSquare, HelpCircle, LogOut, ChevronRight } from 'lucide-react';
 
 type MenuItem = {
@@ -28,8 +29,25 @@ export default function UserInfo() {
 
   if (!isLoaded) {
     return (
-      <div className="flex h-[60vh] w-full items-center justify-center">
-        <div className="size-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-12">
+        <div className="flex justify-center"><Skeleton className="h-8 w-48 rounded-full" /></div>
+        <div className="w-full rounded-2xl border border-border bg-card p-6 shadow-sm flex items-center gap-5 mt-4">
+          <Skeleton className="size-20 rounded-full" />
+          <div className="flex-1 space-y-3">
+            <Skeleton className="h-6 w-3/4" />
+            <Skeleton className="h-4 w-1/2" />
+            <Skeleton className="h-4 w-1/4 mt-2" />
+          </div>
+        </div>
+        <div className="w-full rounded-2xl border border-border bg-card shadow-sm p-4 space-y-6">
+          {[1, 2, 3, 4, 5].map(i => (
+            <div key={i} className="flex items-center gap-4">
+              <Skeleton className="size-10 rounded-full" />
+              <Skeleton className="h-5 flex-1" />
+              <Skeleton className="size-5 rounded-full" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

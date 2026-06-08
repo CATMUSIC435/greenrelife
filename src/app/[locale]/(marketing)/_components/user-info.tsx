@@ -3,14 +3,19 @@
 import { SignInButton, useUser } from '@clerk/nextjs';
 import { Bell } from 'lucide-react';
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const UserInfo = () => {
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {
     return (
-      <div className="flex w-full justify-between rounded px-4 py-1">
-        <p className="text-xs">Đang tải...</p>
+      <div className="flex w-full items-center justify-between rounded px-4 py-1">
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-4 w-24" />
+        </div>
+        <Skeleton className="h-6 w-6 rounded-md" />
       </div>
     );
   }

@@ -19,9 +19,6 @@ export async function POST(req: Request) {
 
     const text = await res.text();
 
-    // DEBUG — in ra response thật sự
-    // console.log('RAW RESPONSE:', text);
-
     // Nếu response là HTML → trả lỗi
     if (text.startsWith('<')) {
       return NextResponse.json(

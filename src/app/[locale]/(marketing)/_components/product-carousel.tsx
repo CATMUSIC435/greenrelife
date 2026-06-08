@@ -37,7 +37,6 @@ export default function ProductCarousel({ id = 20 }: ProductCarouselProps) {
       );
 
       const data = await res.json();
-      console.log(data);
 
       setProducts(data);
     };

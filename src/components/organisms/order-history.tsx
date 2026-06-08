@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { useOrders } from '@/hooks/use-orders';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type OrderHistoryProps = { userId: number };
 
@@ -9,7 +10,22 @@ export const OrderHistory: React.FC<OrderHistoryProps> = ({ userId }) => {
   const { orders, loading } = useOrders(userId);
 
   if (loading) {
-    return <p>Đang tải đơn hàng...</p>;
+    return (
+      <div className="mx-auto mt-6 max-w-3xl rounded-lg border p-4 shadow-md space-y-4">
+        <Skeleton className="h-8 w-48 mb-4" />
+        {[1, 2, 3].map(i => (
+          <div key={i} className="rounded-md border p-4 space-y-3">
+            <Skeleton className="h-5 w-1/2" />
+            <Skeleton className="h-4 w-1/4" />
+            <Skeleton className="h-4 w-1/3" />
+            <div className="ml-4 space-y-2 mt-2">
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   }
   if (!orders.length) {
     return <p>Chưa có đơn hàng nào.</p>;
