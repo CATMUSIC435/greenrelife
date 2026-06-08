@@ -73,14 +73,14 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
               {product.stock_status === 'instock' ? 'Còn hàng' : 'Hết hàng'}
             </p>
           </div>
-        <div className='flex gap-1 w-full mb-4 '>
-          <p className="text-base font-medium">
-            Số lượng: 
-          </p>
-          <p className="text-base font-bold">
-            {`${product.stock_quantity ?? 0}`}
-          </p>
-        </div>
+          <div className="mb-4 flex w-full gap-1 ">
+            <p className="text-base font-medium">
+              Số lượng:
+            </p>
+            <p className="text-base font-bold">
+              {`${product.stock_quantity ?? 0}`}
+            </p>
+          </div>
           {/* Short description (server-rendered) */}
           <div className="prose mb-6 max-w-none" dangerouslySetInnerHTML={{ __html: product.short_description || '' }} />
 

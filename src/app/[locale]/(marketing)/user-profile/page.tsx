@@ -5,18 +5,18 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface MenuItem {
+type MenuItem = {
   href: string;
   label: string;
-}
+};
 
 const menuList: MenuItem[] = [
-  { href: "/favorite", label: "Quản lý sản phẩm yêu thích" },
-  { href: "/product", label: "Quản lý sản phẩm" },
-  { href: "/order", label: "Quản lý đơn đặt hàng" },
-  { href: "/chat/user", label: "Quản lý tin nhắn của bạn" },
-  { href: "/chat", label: "Quản lý tin nhắn khách hàng" },
-  { href: "/contact", label: "Đóng góp ý kiến" },
+  { href: '/favorite', label: 'Quản lý sản phẩm yêu thích' },
+  { href: '/product', label: 'Quản lý sản phẩm' },
+  { href: '/order', label: 'Quản lý đơn đặt hàng' },
+  { href: '/chat/user', label: 'Quản lý tin nhắn của bạn' },
+  { href: '/chat', label: 'Quản lý tin nhắn khách hàng' },
+  { href: '/contact', label: 'Đóng góp ý kiến' },
 ];
 
 export default function UserInfo() {
@@ -101,16 +101,16 @@ export default function UserInfo() {
       </div>
 
       <div className="flex w-full flex-col gap-1">
-     {menuList.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className="rounded-md px-2 py-4 font-bold shadow-2xl
-                     text-indigo-900 backdrop-blur-lg text-shadow-2xs"
-        >
-          {item.label}
-        </Link>
-      ))}
+        {menuList.map(item => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="rounded-md px-2 py-4 font-bold text-indigo-900
+                     shadow-2xl backdrop-blur-lg text-shadow-2xs"
+          >
+            {item.label}
+          </Link>
+        ))}
       </div>
       <div className="mt-4 w-full">
         <div className="mx-auto h-auto w-2/3">

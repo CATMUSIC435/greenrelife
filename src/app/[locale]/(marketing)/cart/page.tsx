@@ -64,11 +64,11 @@ export default function CartPage() {
       </div>
 
       <div className="py-4">
-        <p className="py-2 text-lg font-medium flex justify-between w-full">
+        <p className="flex w-full justify-between py-2 text-lg font-medium">
           <span>Tổng:</span>
           <span>
             {items.reduce((s, i) => s + i.price * i.quantity, 0).toLocaleString()}
-          ₫
+            ₫
           </span>
         </p>
         {items.length

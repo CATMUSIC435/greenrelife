@@ -1,6 +1,7 @@
 import type { Message } from '@/types';
 import { motion } from 'framer-motion';
 import { Check, CheckCheck } from 'lucide-react';
+import Image from 'next/image';
 
 type MessageBubbleProps = {
   message: Message;
@@ -45,9 +46,11 @@ export const MessageBubble = ({
       <div className={systemMessageClasses}>
         {message.attachments && message.attachments.length > 0 && (
           <div className="mb-2">
-            <img
-              src={message.attachments[0]}
+            <Image
+              src={message.attachments[0]!}
               alt="User attachment"
+              width={300}
+              height={200}
               className="max-h-48 w-auto rounded-xl border border-neutral-200/50 dark:border-neutral-600/50"
             />
           </div>

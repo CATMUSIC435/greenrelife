@@ -64,7 +64,7 @@ export default function CreateProductPage() {
         categories: [{ id: isFix ? 32 : 20 }],
         stock_quantity: 1,
         manage_stock: true,
-        stock_status: "instock",
+        stock_status: 'instock',
         meta_data: [
           { key: '_creator_name', value: user?.emailAddresses[0]?.emailAddress },
           { key: '_product_location', value: location },

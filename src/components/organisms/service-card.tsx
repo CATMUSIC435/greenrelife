@@ -22,7 +22,7 @@ type ServiceCardProps = {
 export default function ServiceCard({ id, title, description, img, price, categories, rating, quantity }: ServiceCardProps) {
   const hasCat = hasCategory(categories, 20);
   return (
-    <Card className="w-full gap-2 overflow-hidden rounded-2xl bg-transparent py-0 transition-all duration-300 hover:shadow-lg md:gap-4 h-full">
+    <Card className="h-full w-full gap-2 overflow-hidden rounded-2xl bg-transparent py-0 transition-all duration-300 hover:shadow-lg md:gap-4">
 
       <div className="relative">
         <Image
@@ -43,10 +43,10 @@ export default function ServiceCard({ id, title, description, img, price, catego
       </div>
 
       <CardContent className="px-2 py-1">
-        <p className="text-xs font-medium pb-1 text-red-600">
+        <p className="pb-1 text-xs font-medium text-red-600">
           {price ? `${Number(price).toLocaleString()} đ` : 'Liên hệ'}
         </p>
-        <div className='flex justify-between'>
+        <div className="flex justify-between">
           <p className="text-xs font-medium">
             Số lượng :
           </p>

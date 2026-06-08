@@ -2,8 +2,8 @@ import type { IPost } from '@/types/post';
 import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import CoursesCarrousel from '../_components/course-carousel';
 import { formatDateDMY } from '@/utils/times';
+import CoursesCarrousel from '../_components/course-carousel';
 
 export default async function Index() {
   const WORDPRESS_API = process.env.NEXT_PUBLIC_WORDPRESS_API ?? '';

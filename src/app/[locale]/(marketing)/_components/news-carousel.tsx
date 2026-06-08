@@ -38,7 +38,7 @@ export default function NewsCarousel() {
               className="shrink-0 basis-1/2 px-1" // hiển thị 2 tin tức mỗi slide
             >
               <Link href={`/blog/${post.slug}`}>
-                <div className="flex h-full flex-col rounded-xl px-1 py-2 border-[1px] border-white">
+                <div className="flex h-full flex-col rounded-xl border-[1px] border-white px-1 py-2">
                   <Image
                     src={post.yoast_head_json.og_image[0]?.url ?? ''}
                     alt={post.title.rendered}

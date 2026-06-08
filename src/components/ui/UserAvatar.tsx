@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 type UserAvatarProps = {
   name: string;
   avatar?: string;
@@ -34,9 +36,11 @@ export const UserAvatar = ({ name, avatar, size = 'md' }: UserAvatarProps) => {
 
   return avatar
     ? (
-        <img
+        <Image
           src={avatar}
           alt={`${name}'s avatar`}
+          width={64}
+          height={64}
           className={`${sizes[size]} flex-shrink-0 rounded-full border-2 border-white object-cover shadow-sm dark:border-neutral-800`}
         />
       )

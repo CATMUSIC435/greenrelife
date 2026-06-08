@@ -3,8 +3,14 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Outfit } from 'next/font/google';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { routing } from '@/libs/I18nRouting';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+});
+import { routing } from '@/lib/i18n-routing';
 import { ClerkLocalizations } from '@/utils/AppConfig';
 import '@/styles/global.css';
 
@@ -34,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return routing.locales.map(locale => ({ locale }));
+  return routing.locales.map((locale: string) => ({ locale }));
 }
 
 export default async function RootLayout(props: {
@@ -63,7 +69,7 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale}>
-      <body>
+      <body className={outfit.className}>
         <NextIntlClientProvider>
           <PostHogProvider>
             <ClerkProvider
