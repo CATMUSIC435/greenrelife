@@ -10,8 +10,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { parseLatLng } from '@/lib/utils';
 import { formatDatePretty } from '@/utils/format-date-pretty';
-import MapLocationPicker from '../../_components/map-location-picker';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
 
+const MapLocationPicker = dynamic(
+  () => import('../../_components/map-location-picker'),
+  { 
+    ssr: false,
+    loading: () => <Skeleton className="h-[300px] w-full rounded-xl" />
+  }
+);
 export default function CreateProductPage() {
   const { user } = useUser();
   const [name, setName] = useState('');

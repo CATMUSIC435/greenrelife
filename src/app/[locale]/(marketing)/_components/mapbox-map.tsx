@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useGeolocation } from '@/hooks/use-geolocation';
+import { Search } from 'lucide-react';
 
 export type MarkerItem = {
   id?: string | number;
@@ -203,33 +204,15 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
 
   return (
     <div className={`${className} relative`}>
-      <div className="absolute top-0 left-0 z-1 w-full pt-2">
-        <div className="flex items-center gap-4">
-          <div className="flex w-full max-w-md items-center rounded-md border border-gray-300 bg-white px-2 shadow-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-5 w-5 text-gray-500"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <Input
-              placeholder="Search services..."
-              className="border-0 p-0 shadow-none focus-visible:ring-0"
-
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-              }}
-
-            />
-          </div>
+      <div className="absolute top-4 left-0 z-10 w-full px-4 pointer-events-none">
+        <div className="mx-auto flex w-full max-w-md items-center rounded-full border border-border/50 bg-background/80 backdrop-blur-xl px-4 py-1 shadow-lg shadow-black/5 pointer-events-auto transition-all focus-within:ring-2 focus-within:ring-primary/20">
+          <Search className="mr-2 h-5 w-5 text-muted-foreground" />
+          <Input
+            placeholder="Tìm kiếm dịch vụ, địa điểm..."
+            className="border-0 bg-transparent p-0 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-0 h-10 text-base"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
       </div>
       <div

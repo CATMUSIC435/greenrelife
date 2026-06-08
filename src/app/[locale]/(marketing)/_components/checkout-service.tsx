@@ -9,10 +9,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { convertForWoo } from '@/utils/convert';
 import { formatDatePretty } from '@/utils/format-date-pretty';
-import { CalendarCheckout } from './calendar-checkout';
 import { FadeIn } from '@/components/ui/fade-in';
 import { SectionTitle } from '@/components/ui/section-title';
 import { Loader2, ShieldCheck, CreditCard } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const CalendarCheckout = dynamic(
+  () => import('./calendar-checkout').then((mod) => mod.CalendarCheckout),
+  {
+    ssr: false,
+    loading: () => <Skeleton className="h-[350px] w-full rounded-[24px]" />
+  }
+);
+
 
 type CheckoutServiceProps = {
   items: any;
