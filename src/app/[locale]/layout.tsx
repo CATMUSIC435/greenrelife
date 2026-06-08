@@ -3,10 +3,10 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { Outfit } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 
-const outfit = Outfit({
+const font = Plus_Jakarta_Sans({
   subsets: ['latin'],
   display: 'swap',
 });
@@ -69,7 +69,7 @@ export default async function RootLayout(props: {
 
   return (
     <html lang={locale}>
-      <body className={outfit.className}>
+      <body className={font.className}>
         <NextIntlClientProvider>
           <PostHogProvider>
             <ClerkProvider

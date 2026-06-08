@@ -1,6 +1,9 @@
 import type { Product } from '../_components/product-list';
 import Link from 'next/link';
 import ProductListUser from '../_components/product-list-user';
+import { FadeIn } from '@/components/ui/fade-in';
+import { SectionTitle } from '@/components/ui/section-title';
+import { Plus } from 'lucide-react';
 
 export default async function Index() {
   const res = await fetch('https://greenrelife.dxmd.vn/wp-json/wc/v3/products', {
@@ -10,17 +13,25 @@ export default async function Index() {
     cache: 'no-store',
     next: { revalidate: 0 },
   });
+  
   const products: Array<Product> = await res.json();
+
   return (
-    <div className="w-full px-4">
-      <div className="py-2">
-        <Link href="product/create" className="mb-4 block w-full rounded-md bg-blue-600 px-2 py-2 text-center text-2xl font-bold text-white shadow-2xl text-shadow-2xs ">
+    <div className="mx-auto max-w-7xl px-4 py-12">
+      <FadeIn className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+        <SectionTitle title="Quản lý sản phẩm" className="!mb-0" alignment="left" />
+        <Link 
+          href="/product/create" 
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground shadow transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring active:scale-95 shrink-0"
+        >
+          <Plus className="size-4" />
           Tạo sản phẩm
         </Link>
-      </div>
-      <div className="grid grid-cols-1 gap-4">
+      </FadeIn>
+
+      <FadeIn delay={0.2} className="grid grid-cols-1 gap-4">
         <ProductListUser products={products} />
-      </div>
+      </FadeIn>
     </div>
   );
 }

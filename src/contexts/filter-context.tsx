@@ -12,10 +12,16 @@ type FilterState = {
 
 const FilterContext = createContext<FilterState | null>(null);
 
-export function FilterProvider({ children }: { children: React.ReactNode }) {
+export function FilterProvider({
+  children,
+  initialProducts = [],
+}: {
+  children: React.ReactNode;
+  initialProducts?: any[];
+}) {
   const [search, setSearch] = useState('');
   const [categories, setCategories] = useState<number[]>([]);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(initialProducts);
 
   // Hàm toggle category
   const toggleCategory = (id: number) => {
@@ -24,8 +30,14 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
-  // Fetch API khi filter đổi
+  // Fetch API khi filter đổi (bỏ qua lần đầu nếu không có filter)
   useEffect(() => {
+    // Nếu chưa có filter nào thì không cần fetch lại, dùng initialProducts
+    if (!search && categories.length === 0) {
+      setProducts(initialProducts);
+      return;
+    }
+
     const fetchProducts = async () => {
       const params = new URLSearchParams();
 

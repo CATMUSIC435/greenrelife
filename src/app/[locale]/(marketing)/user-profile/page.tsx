@@ -4,34 +4,44 @@ import { SignInButton, SignOutButton, useUser } from '@clerk/nextjs';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FadeIn } from '@/components/ui/fade-in';
+import { SectionTitle } from '@/components/ui/section-title';
+import { Heart, Package, ShoppingBag, MessageSquare, MessagesSquare, HelpCircle, LogOut, ChevronRight } from 'lucide-react';
 
 type MenuItem = {
   href: string;
   label: string;
+  icon: React.ReactNode;
 };
 
 const menuList: MenuItem[] = [
-  { href: '/favorite', label: 'Quản lý sản phẩm yêu thích' },
-  { href: '/product', label: 'Quản lý sản phẩm' },
-  { href: '/order', label: 'Quản lý đơn đặt hàng' },
-  { href: '/chat/user', label: 'Quản lý tin nhắn của bạn' },
-  { href: '/chat', label: 'Quản lý tin nhắn khách hàng' },
-  { href: '/contact', label: 'Đóng góp ý kiến' },
+  { href: '/favorite', label: 'Sản phẩm yêu thích', icon: <Heart className="size-5 text-rose-500" /> },
+  { href: '/product', label: 'Quản lý sản phẩm', icon: <Package className="size-5 text-blue-500" /> },
+  { href: '/order', label: 'Quản lý đơn đặt hàng', icon: <ShoppingBag className="size-5 text-emerald-500" /> },
+  { href: '/chat/user', label: 'Tin nhắn của bạn', icon: <MessageSquare className="size-5 text-violet-500" /> },
+  { href: '/chat', label: 'Tin nhắn khách hàng', icon: <MessagesSquare className="size-5 text-orange-500" /> },
+  { href: '/contact', label: 'Đóng góp ý kiến', icon: <HelpCircle className="size-5 text-sky-500" /> },
 ];
 
 export default function UserInfo() {
   const { isLoaded, isSignedIn, user } = useUser();
 
   if (!isLoaded) {
-    return <p>Đang tải...</p>;
+    return (
+      <div className="flex h-[60vh] w-full items-center justify-center">
+        <div className="size-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
   }
 
   if (!isSignedIn) {
     return (
-      <div className="flex h-screen w-full items-center justify-center">
+      <div className="mx-auto flex max-w-md flex-col items-center justify-center pt-24 px-4 text-center">
+        <SectionTitle title="Hồ sơ cá nhân" />
+        <p className="mt-4 text-muted-foreground mb-8">Vui lòng đăng nhập để xem thông tin cá nhân và quản lý đơn hàng của bạn.</p>
         <SignInButton mode="modal">
-          <button type="button" className="w-full rounded bg-blue-500 px-6 py-2 text-white shadow-2xl transition hover:bg-blue-600">
-            Đăng nhập
+          <button type="button" className="w-full rounded-full bg-primary px-8 py-3 font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 active:scale-95">
+            Đăng nhập ngay
           </button>
         </SignInButton>
       </div>
@@ -41,82 +51,77 @@ export default function UserInfo() {
   if (!user) {
     return null;
   }
+  
   const formatDate = (dateStr?: string) =>
-    dateStr ? dayjs(dateStr).format('DD/MM/YYYY HH:mm') : 'N/A';
+    dateStr ? dayjs(dateStr).format('DD/MM/YYYY') : 'N/A';
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-4 rounded-xl px-4 pt-4 pb-20">
-      {/* Avatar */}
-      {user.imageUrl && (
-        <div className="relative h-24 w-24 flex-shrink-0">
-          <Image
-            src={user.imageUrl}
-            alt={user.username || 'Avatar'}
-            fill
-            className="rounded-full object-cover"
-          />
-        </div>
-      )}
+    <div className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-12">
+      <FadeIn>
+        <SectionTitle title="Hồ sơ cá nhân" className="text-center" />
+      </FadeIn>
 
-      <div className="w-full max-w-sm rounded-xl bg-white/20 p-4 shadow-sm backdrop-blur-2xl">
-        {/* Name + Username */}
-        <p className="text-lg font-bold text-gray-900">
-          {user.firstName}
-          {' '}
-          {user.lastName}
-          {' '}
-          {user.username && (
-            <span className="font-medium text-indigo-500">
-              (
-              {user.username}
-              )
-            </span>
+      <FadeIn delay={0.1} className="w-full rounded-2xl bg-card border border-border p-6 shadow-sm flex items-center gap-5 mt-4">
+        {/* Avatar */}
+        <div className="relative size-20 flex-shrink-0 rounded-full border-2 border-primary/20 p-1">
+          {user.imageUrl ? (
+            <Image
+              src={user.imageUrl}
+              alt={user.username || 'Avatar'}
+              fill
+              className="rounded-full object-cover"
+            />
+          ) : (
+            <div className="size-full rounded-full bg-muted" />
           )}
-        </p>
-
-        {/* Email */}
-        <p className="mt-1 truncate text-sm">{user.emailAddresses[0]?.emailAddress}</p>
-
-        {/* ID and Role */}
-        <div className="mt-2 flex flex-wrap gap-2 text-sm">
-          <span className="rounded-md bg-indigo-100/20 px-2 py-1 text-indigo-800">
-            Role:
-            {' '}
-            {(user.publicMetadata?.role as string) || 'User'}
-          </span>
         </div>
 
-        {/* Created Date */}
-        <p className="mt-2 text-xs">
-          Created:
-          {' '}
-          {formatDate(`${user.createdAt}`)}
-        </p>
+        <div className="flex-1 overflow-hidden">
+          <p className="text-xl font-bold text-foreground truncate">
+            {user.firstName} {user.lastName}
+          </p>
+          <p className="truncate text-sm text-muted-foreground">
+            {user.emailAddresses[0]?.emailAddress}
+          </p>
+          <div className="mt-2 flex items-center gap-2 text-xs">
+            <span className="rounded-full bg-primary/10 px-2.5 py-0.5 font-medium text-primary">
+              {(user.publicMetadata?.role as string) || 'Khách hàng'}
+            </span>
+            <span className="text-muted-foreground">
+              Tham gia: {formatDate(`${user.createdAt}`)}
+            </span>
+          </div>
+        </div>
+      </FadeIn>
 
+      <FadeIn delay={0.2} className="w-full overflow-hidden rounded-2xl bg-card border border-border shadow-sm">
+        <div className="flex flex-col">
+          {menuList.map((item, index) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center gap-4 px-4 py-4 transition-colors hover:bg-muted/50 active:bg-muted ${
+                index !== menuList.length - 1 ? 'border-b border-border/50' : ''
+              }`}
+            >
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-background border border-border shadow-sm">
+                {item.icon}
+              </div>
+              <span className="flex-1 font-medium text-foreground">{item.label}</span>
+              <ChevronRight className="size-5 text-muted-foreground" />
+            </Link>
+          ))}
+        </div>
+      </FadeIn>
+
+      <FadeIn delay={0.3}>
         <SignOutButton redirectUrl="/">
-          <button type="button" className="mt-2 w-full rounded-md bg-red-500 px-6 py-2 text-white shadow-2xl transition hover:bg-red-600">
+          <button type="button" className="flex w-full items-center justify-center gap-2 rounded-2xl bg-destructive/10 px-4 py-4 font-medium text-destructive transition-colors hover:bg-destructive/20 active:scale-95">
+            <LogOut className="size-5" />
             Đăng xuất
           </button>
         </SignOutButton>
-      </div>
-
-      <div className="flex w-full flex-col gap-1">
-        {menuList.map(item => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="rounded-md px-2 py-4 font-bold text-indigo-900
-                     shadow-2xl backdrop-blur-lg text-shadow-2xs"
-          >
-            {item.label}
-          </Link>
-        ))}
-      </div>
-      <div className="mt-4 w-full">
-        <div className="mx-auto h-auto w-2/3">
-          <Image src="/logo.png" height={400} width={480} alt="" className="h-auto w-full object-cover" />
-        </div>
-      </div>
+      </FadeIn>
     </div>
   );
-};
+}

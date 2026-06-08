@@ -5,7 +5,7 @@ import ProductCategories from '../_components/product-categories';
 import ProductList from '../_components/product-list';
 import SearchHeader from '../_components/search-header';
 
-export default function PageContent() {
+export default function PageContent({ initialCategories = [] }: { initialCategories?: any[] }) {
   const { products } = useFilter();
 
   return (
@@ -15,7 +15,7 @@ export default function PageContent() {
       </div>
 
       <div className="pb-4">
-        <ProductCategories />
+        <ProductCategories initialCategories={initialCategories} />
       </div>
 
       <div className="grid grid-cols-1 gap-4">

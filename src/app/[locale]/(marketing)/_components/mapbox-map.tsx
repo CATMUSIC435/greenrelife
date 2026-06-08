@@ -236,6 +236,12 @@ const MapboxMap: React.FC<MapboxMapProps> = ({
         ref={mapContainer}
         className={`w-full ${height} overflow-hidden rounded-lg border border-gray-100 shadow-sm`}
       />
+      <style>{`
+        .mapboxgl-ctrl-top-right {
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+        }
+      `}</style>
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import ProductClient from '../../_components/product-client';
 import ProductReviews from '../../_components/product-reviews';
 import ReviewPopup from '../../_components/review-popup';
+import { FadeIn } from '@/components/ui/fade-in';
+import { Package, Tag, Hash } from 'lucide-react';
 
 export type WooProduct = any;
 
@@ -28,74 +30,128 @@ export default async function ProductPage({ params }: { params: Promise<{ locale
   }
 
   const product = await res.json() as WooProduct;
+  
   return (
-    <div className="container mx-auto px-4 pt-4 pb-20">
-      <div className="grid grid-cols-1 gap-6">
-        {/* Left: gallery */}
-        <div className="lg:col-span-1">
-          {/* show first image large, others below — client carousel handles full interaction */}
-          {product.images?.length > 0
-            ? (
-                <div className="w-full">
-                  <Image
-                    src={product.images[0].src}
-                    alt={product.name}
-                    width={800}
-                    height={800}
-                    className="h-auto w-full rounded-lg object-cover"
-                    priority
-                  />
-                </div>
-              )
-            : (
-                <div className="flex h-72 w-full items-center justify-center rounded-lg bg-gray-100">
-                  <span className="text-gray-400">Không có hình</span>
-                </div>
+    <div className="mx-auto max-w-6xl px-4 md:px-8 pt-8 pb-32">
+      <FadeIn className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        
+        {/* Left: Image Gallery */}
+        <div className="lg:col-span-5 lg:col-start-1 flex flex-col gap-4">
+          <div className="relative aspect-square w-full overflow-hidden rounded-[32px] border border-border/50 bg-card/50 p-2 shadow-sm backdrop-blur-xl">
+            {product.images?.length > 0 ? (
+              <div className="relative h-full w-full overflow-hidden rounded-[24px] bg-muted/20">
+                <Image
+                  src={product.images[0].src}
+                  alt={product.name}
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            ) : (
+              <div className="flex h-full w-full items-center justify-center rounded-[24px] bg-muted/20">
+                <span className="text-muted-foreground font-medium flex flex-col items-center gap-2">
+                  <div className="size-12 rounded-full bg-muted flex items-center justify-center">?</div>
+                  Không có hình
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Right: Product Details */}
+        <div className="lg:col-span-7 flex flex-col justify-center">
+          <div className="space-y-6">
+            {/* Badges */}
+            <div className="flex flex-wrap items-center gap-3">
+              {product.stock_status === 'instock' ? (
+                <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-sm font-semibold text-emerald-600 ring-1 ring-inset ring-emerald-500/20">
+                  <Package className="mr-1.5 h-4 w-4" />
+                  Còn hàng
+                </span>
+              ) : (
+                <span className="inline-flex items-center rounded-full bg-red-500/10 px-3 py-1 text-sm font-semibold text-red-600 ring-1 ring-inset ring-red-500/20">
+                  <Package className="mr-1.5 h-4 w-4" />
+                  Hết hàng
+                </span>
               )}
+              
+              {product.sku && (
+                <span className="inline-flex items-center rounded-full bg-muted/50 px-3 py-1 text-sm font-medium text-muted-foreground ring-1 ring-inset ring-border/50">
+                  <Hash className="mr-1 h-3.5 w-3.5" />
+                  SKU: {product.sku}
+                </span>
+              )}
+            </div>
+
+            {/* Title */}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.15]">
+              {product.name}
+            </h1>
+
+            {/* Price */}
+            <div className="flex items-end gap-3">
+              <p className="text-4xl sm:text-5xl font-extrabold tracking-tight text-primary">
+                {product.price ? `${Number(product.price).toLocaleString()} ₫` : 'Liên hệ'}
+              </p>
+            </div>
+
+            {/* Quantity */}
+            {product.stock_quantity > 0 && (
+              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                <Tag className="h-4 w-4 text-primary/70" />
+                Số lượng kho: <span className="text-foreground font-bold">{product.stock_quantity}</span>
+              </div>
+            )}
+
+            {/* Short Description */}
+            {product.short_description && (
+              <div 
+                className="prose prose-sm sm:prose-base dark:prose-invert max-w-none text-muted-foreground leading-relaxed bg-muted/20 rounded-2xl p-4 sm:p-6 border border-border/30" 
+                dangerouslySetInnerHTML={{ __html: product.short_description }} 
+              />
+            )}
+
+            {/* Actions (Add to Cart, etc.) */}
+            <div className="pt-4">
+              <ProductClient product={product} />
+            </div>
+            
+            <div className="pt-2">
+              <ReviewPopup productId={product.id} />
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+
+      {/* Details & Reviews Grid */}
+      <FadeIn delay={0.2} className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
+        
+        {/* Full Description */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-2xl font-bold tracking-tight px-2">Thông tin chi tiết</h2>
+          <div className="rounded-3xl border border-border/40 bg-card/40 backdrop-blur-md p-6 sm:p-8 shadow-sm">
+            {product.description ? (
+              <div 
+                className="prose prose-base dark:prose-invert max-w-none prose-img:rounded-2xl prose-img:shadow-sm" 
+                dangerouslySetInnerHTML={{ __html: product.description }} 
+              />
+            ) : (
+              <p className="text-muted-foreground italic">Sản phẩm chưa có mô tả chi tiết.</p>
+            )}
+          </div>
         </div>
 
-        {/* Right Top: details */}
-        <div className="lg:col-span-2">
-          <h1 className="mb-2 text-3xl font-bold">{product.name}</h1>
-
-          <div className="mb-1 flex items-center gap-4">
-            <p className="text-xl font-bold text-red-600">
-              {product.price ? `${Number(product.price).toLocaleString()} đ` : 'Liên hệ'}
-            </p>
-
-            <p className="text-sm text-gray-500">
-              SKU:
-              {' '}
-              {product.sku || '—'}
-            </p>
-
-            <p className={`text-sm font-medium ${product.stock_status === 'instock' ? 'text-green-600' : 'text-red-600'}`}>
-              {product.stock_status === 'instock' ? 'Còn hàng' : 'Hết hàng'}
-            </p>
+        {/* Reviews Section */}
+        <div className="lg:col-span-1 space-y-6">
+          <h2 className="text-2xl font-bold tracking-tight px-2">Đánh giá</h2>
+          <div className="rounded-3xl border border-border/40 bg-card/40 backdrop-blur-md p-6 sm:p-8 shadow-sm">
+            <ProductReviews productId={product.id} />
           </div>
-          <div className="mb-4 flex w-full gap-1 ">
-            <p className="text-base font-medium">
-              Số lượng:
-            </p>
-            <p className="text-base font-bold">
-              {`${product.stock_quantity ?? 0}`}
-            </p>
-          </div>
-          {/* Short description (server-rendered) */}
-          <div className="prose mb-6 max-w-none" dangerouslySetInnerHTML={{ __html: product.short_description || '' }} />
-
-          <ProductClient product={product} />
         </div>
-      </div>
 
-      <ReviewPopup productId={product.id} />
-      {/* Full description below */}
-      <div className="h-screen overflow-y-scroll rounded-md py-2">
-        <div className="prose mt-10 max-w-none" dangerouslySetInnerHTML={{ __html: product.description || '' }} />
-      </div>
-      <div className="py-2">
-        <ProductReviews productId={product.id} />
-      </div>
+      </FadeIn>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { parseLatLng } from '@/lib/utils';
 import { formatDatePretty } from '@/utils/format-date-pretty';
 import MapLocationPicker from '../../_components/map-location-picker';
+import { Camera, MapPin, Tag, Type, Loader2 } from 'lucide-react';
 
 export default function CreateProductPage() {
   const { user } = useUser();
@@ -23,26 +24,35 @@ export default function CreateProductPage() {
   const [location, setLocation] = useState('10.8000,106.6667');
 
   const WP_API = 'https://greenrelife.dxmd.vn/wp-json';
+  const TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjcwNjY2NTEsIm5iZiI6MTc2NzA2NjY1MSwiZXhwIjoxNzY3NjcxNDUxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.R81NIINTcHEAUUbMY3e9fxcQBBTh6FmSzGnPd3t2kls`;
 
   // Upload ảnh -> trả về ID ảnh trong WP
   const uploadImage = async (file: File) => {
     const form = new FormData();
     form.append('file', file, file.name);
 
-    const res = await fetch('https://greenrelife.dxmd.vn/wp-json/wp/v2/media', {
+    const res = await fetch(`${WP_API}/wp/v2/media`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjcwNjY2NTEsIm5iZiI6MTc2NzA2NjY1MSwiZXhwIjoxNzY3NjcxNDUxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.R81NIINTcHEAUUbMY3e9fxcQBBTh6FmSzGnPd3t2kls`,
+        'Authorization': `Bearer ${TOKEN}`,
         'Content-Disposition': `attachment; filename="${file.name}"`,
       },
       body: form,
     });
 
-    const data = await res.json();
-    return data;
+    if (!res.ok) {
+      throw new Error(`Upload ảnh thất bại: ${file.name}`);
+    }
+
+    return await res.json();
   };
 
   const handleSubmit = async () => {
+    if (!name || !price || images.length === 0) {
+      toast.error('Vui lòng điền đầy đủ tên, giá và chọn ít nhất 1 ảnh sản phẩm.');
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -74,128 +84,201 @@ export default function CreateProductPage() {
       const res = await fetch(`${WP_API}/user/v1/products`, {
         method: 'POST',
         headers: {
-          'Authorization':
-              `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2dyZWVucmVsaWZlLmR4bWQudm4iLCJpYXQiOjE3NjcwNjY2NTEsIm5iZiI6MTc2NzA2NjY1MSwiZXhwIjoxNzY3NjcxNDUxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.R81NIINTcHEAUUbMY3e9fxcQBBTh6FmSzGnPd3t2kls`,
+          'Authorization': `Bearer ${TOKEN}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
 
+      if (!res.ok) {
+        throw new Error('Đăng sản phẩm thất bại.');
+      }
+
       await res.json();
-      toast('Tạo sản phẩm thành công', {
+      toast.success('Tạo sản phẩm thành công', {
         description: `${formatDatePretty(new Date())}`,
       });
       window.location.href = `/product`;
     } catch (err: any) {
       console.error(err);
+      toast.error('Có lỗi xảy ra', {
+        description: err.message || 'Vui lòng thử lại sau.',
+      });
     } finally {
       setLoading(false);
     }
   };
 
+  const removeImage = (index: number) => {
+    setImages(prev => prev.filter((_, i) => i !== index));
+  };
+
   return (
-    <div className="mx-auto space-y-6 rounded-lg px-4 pt-2 pb-20 shadow-md">
-      <h1 className="w-full text-center text-2xl font-bold text-white">Đăng sản phẩm</h1>
-
-      <div className="space-y-1">
-        <Label htmlFor="name" className="text-white">Tên sản phẩm</Label>
-        <Input
-          id="name"
-          placeholder="Nhập tên sản phẩm"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
+    <div className="mx-auto max-w-2xl space-y-8 rounded-2xl bg-zinc-950/40 p-6 pb-20 shadow-2xl backdrop-blur-md border border-white/10 mt-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-3xl font-bold tracking-tight text-white">Đăng sản phẩm mới</h1>
+        <p className="text-sm text-zinc-400">Điền thông tin chi tiết để đăng bán hoặc cung cấp dịch vụ sửa chữa.</p>
       </div>
 
-      <div className="space-y-1">
-        <Label htmlFor="name" className="text-white">Loại</Label>
-        <Button className="w-full bg-blue-600" onClick={() => setIsFix(prev => !prev)}>{isFix ? 'Sữa chữa' : 'Bán'}</Button>
-      </div>
+      <div className="space-y-6">
+        {/* Tên sản phẩm */}
+        <div className="space-y-2">
+          <Label htmlFor="name" className="text-zinc-200 flex items-center gap-2">
+            <Type className="w-4 h-4 text-emerald-400" /> Tên sản phẩm
+          </Label>
+          <Input
+            id="name"
+            placeholder="Nhập tên sản phẩm"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-500 focus-visible:ring-emerald-500"
+          />
+        </div>
 
-      <div className="space-y-1">
-        <Label htmlFor="price" className="text-white">Giá</Label>
-        <Input
-          id="price"
-          type="number"
-          placeholder="Nhập giá sản phẩm"
-          value={price}
-          onChange={e => setPrice(e.target.value)}
-        />
-      </div>
-
-      {/* Mô tả ngắn */}
-      <div className="space-y-1">
-        <Label htmlFor="shortDesc" className="text-white">Mô tả ngắn</Label>
-        <Textarea
-          id="shortDesc"
-          placeholder="Nhập mô tả ngắn"
-          value={shortDesc}
-          onChange={e => setShortDesc(e.target.value)}
-          className="resize-none"
-        />
-      </div>
-
-      {/* Giá sản phẩm */}
-      <div className="space-y-1">
-        <Label htmlFor="product-location" className="text-white">Vị trí sản phẩm (lat,lng)</Label>
-        <MapLocationPicker
-          value={parseLatLng(location)}
-          onChange={pos => setLocation(pos)}
-          height="450px"
-        />
-
-        <Input
-          id="product-location"
-          placeholder="Nhập tọa độ ví dụ: 10.8000,106.6667"
-          disabled
-          value={location}
-        />
-      </div>
-
-      {/* Mô tả dài */}
-      <div className="space-y-1">
-        <Label htmlFor="desc" className="text-white">Mô tả chi tiết</Label>
-        <Textarea
-          id="desc"
-          placeholder="Nhập mô tả chi tiết"
-          value={desc}
-          onChange={e => setDesc(e.target.value)}
-          className="resize-none"
-        />
-      </div>
-
-      {/* Upload ảnh */}
-      <div className="space-y-1">
-        <Label htmlFor="images" className="text-white">Ảnh sản phẩm</Label>
-        <Input
-          id="images"
-          type="file"
-          multiple
-          onChange={e => setImages(Array.from(e.target.files || []))}
-          className="cursor-pointer"
-        />
-        {images.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-2">
-            {images.map((img, idx) => (
-              <span
-                key={idx}
-                className="rounded bg-green-100 px-2 py-1 text-sm text-green-800"
-              >
-                {img.name}
-              </span>
-            ))}
+        {/* Loại */}
+        <div className="space-y-2">
+          <Label className="text-zinc-200 flex items-center gap-2">
+            <Tag className="w-4 h-4 text-emerald-400" /> Loại dịch vụ
+          </Label>
+          <div className="grid grid-cols-2 gap-4">
+            <Button
+              type="button"
+              variant={!isFix ? 'default' : 'outline'}
+              className={`w-full transition-all duration-300 ${!isFix ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-900/20' : 'bg-transparent border-white/10 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
+              onClick={() => setIsFix(false)}
+            >
+              Bán sản phẩm
+            </Button>
+            <Button
+              type="button"
+              variant={isFix ? 'default' : 'outline'}
+              className={`w-full transition-all duration-300 ${isFix ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-900/20' : 'bg-transparent border-white/10 text-zinc-400 hover:text-white hover:bg-zinc-800'}`}
+              onClick={() => setIsFix(true)}
+            >
+              Dịch vụ Sửa chữa
+            </Button>
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Button submit */}
-      <Button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="w-full"
-      >
-        {loading ? 'Đang đăng...' : 'Đăng sản phẩm'}
-      </Button>
+        {/* Giá */}
+        <div className="space-y-2">
+          <Label htmlFor="price" className="text-zinc-200 flex items-center gap-2">
+            <Tag className="w-4 h-4 text-emerald-400" /> Giá (VNĐ)
+          </Label>
+          <Input
+            id="price"
+            type="number"
+            placeholder="Nhập giá sản phẩm"
+            value={price}
+            onChange={e => setPrice(e.target.value)}
+            className="bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-500 focus-visible:ring-emerald-500"
+          />
+        </div>
+
+        {/* Mô tả ngắn */}
+        <div className="space-y-2">
+          <Label htmlFor="shortDesc" className="text-zinc-200">Mô tả ngắn</Label>
+          <Textarea
+            id="shortDesc"
+            placeholder="Nhập mô tả ngắn gọn về sản phẩm"
+            value={shortDesc}
+            onChange={e => setShortDesc(e.target.value)}
+            className="resize-none bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-500 focus-visible:ring-emerald-500 min-h-[80px]"
+          />
+        </div>
+
+        {/* Vị trí */}
+        <div className="space-y-3 rounded-xl bg-zinc-900/30 p-4 border border-white/5">
+          <Label htmlFor="product-location" className="text-zinc-200 flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-emerald-400" /> Vị trí sản phẩm
+          </Label>
+          <div className="overflow-hidden rounded-xl border border-white/10 shadow-inner">
+            <MapLocationPicker
+              value={parseLatLng(location)}
+              onChange={pos => setLocation(pos)}
+              height="300px"
+            />
+          </div>
+          <Input
+            id="product-location"
+            placeholder="Tọa độ: 10.8000,106.6667"
+            readOnly
+            value={location}
+            className="bg-zinc-950/50 border-white/10 text-zinc-400 cursor-not-allowed"
+          />
+        </div>
+
+        {/* Mô tả chi tiết */}
+        <div className="space-y-2">
+          <Label htmlFor="desc" className="text-zinc-200">Mô tả chi tiết</Label>
+          <Textarea
+            id="desc"
+            placeholder="Nhập mô tả chi tiết"
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
+            className="resize-none bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-500 focus-visible:ring-emerald-500 min-h-[120px]"
+          />
+        </div>
+
+        {/* Upload ảnh */}
+        <div className="space-y-3">
+          <Label htmlFor="images" className="text-zinc-200 flex items-center gap-2">
+            <Camera className="w-4 h-4 text-emerald-400" /> Ảnh sản phẩm
+          </Label>
+          
+          <div className="relative group">
+            <Input
+              id="images"
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={e => {
+                if (e.target.files) {
+                  setImages(prev => [...prev, ...Array.from(e.target.files!)]);
+                }
+              }}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+            />
+            <div className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-xl bg-zinc-900/50 group-hover:bg-zinc-800/50 group-hover:border-emerald-500/50 transition-all duration-300">
+              <Camera className="w-8 h-8 text-zinc-500 group-hover:text-emerald-400 mb-2 transition-colors" />
+              <p className="text-sm text-zinc-400 group-hover:text-zinc-300">Nhấn hoặc kéo thả ảnh vào đây</p>
+            </div>
+          </div>
+
+          {images.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-4">
+              {images.map((img, idx) => (
+                <div key={idx} className="relative h-24 w-24 overflow-hidden rounded-xl border border-white/10 shadow-sm group">
+                  <img src={URL.createObjectURL(img)} alt="preview" className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                  <button 
+                    type="button"
+                    onClick={() => removeImage(idx)}
+                    className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Submit */}
+        <Button
+          onClick={handleSubmit}
+          disabled={loading}
+          className="w-full h-12 text-lg font-medium bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white shadow-lg shadow-emerald-900/30 transition-all duration-300 disabled:opacity-70"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Đang đăng sản phẩm...
+            </>
+          ) : (
+            'Đăng sản phẩm'
+          )}
+        </Button>
+      </div>
     </div>
   );
 }
