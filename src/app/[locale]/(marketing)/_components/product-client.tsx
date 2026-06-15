@@ -57,7 +57,7 @@ export default function ProductClient({ product }: { product: WooProduct }) {
         selectedOptions={selectedOptions}
         onChange={handleOptionChange}
       />
-      {product.stock_quantity ? (
+      {product.stock_status === 'instock' ? (
         <>
           {hasCat ? (
             <Link
